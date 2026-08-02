@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --bg: #03030a;
+    --bg: #000000;
     --fg: #eef0ff;
     --muted: #8b90b8;
     --accent: #6ad0ff;
@@ -245,6 +245,46 @@
   0% { transform: translate3d(0, -10vh, 0) rotate(-35deg); opacity: 0; }
   10% { opacity: 1; }
   100% { transform: translate3d(40vw, 110vh, 0) rotate(-35deg); opacity: 0; }
+}
+
+@keyframes planet-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes moon-orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes moon-orbit-saturn {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes moon-orbit-neptune {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes moon-orbit-mars {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes earth-rotate {
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
+}
+
+@keyframes earth-clouds {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes moon-orbit-earth {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .reveal {
