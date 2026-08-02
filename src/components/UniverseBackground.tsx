@@ -559,6 +559,18 @@ export default function UniverseBackground({
     };
     window.addEventListener('click', onClick);
 
+    // Mouse parallax — pilot looking around through windshield
+    let mouseNX = 0;
+    let mouseNY = 0;
+    let parallaxX = 0;
+    let parallaxY = 0;
+
+    const onMouseMove = (e: MouseEvent) => {
+      mouseNX = (e.clientX / w - 0.5) * 2;
+      mouseNY = (e.clientY / h - 0.5) * 2;
+    };
+    window.addEventListener('mousemove', onMouseMove);
+
     const handleResize = () => {
       w = window.innerWidth;
       h = window.innerHeight;
@@ -573,6 +585,17 @@ export default function UniverseBackground({
 
     const render = (now: number) => {
       t += 0.016;
+
+      // Camera parallax — mouse-driven + subtle inertial drift
+      const targetPX = mouseNX * 14;
+      const targetPY = mouseNY * 10;
+      parallaxX += (targetPX - parallaxX) * 0.025;
+      parallaxY += (targetPY - parallaxY) * 0.025;
+      const driftX = Math.sin(now * 0.0003) * 3;
+      const driftY = Math.cos(now * 0.0002) * 2;
+      const totalPX = parallaxX + driftX;
+      const totalPY = parallaxY + driftY;
+
       const sp = scrollProgress.current;
       const regionIdx = Math.min(
         REGIONS.length - 1,
@@ -591,7 +614,7 @@ export default function UniverseBackground({
       bgGrad.addColorStop(0.5, `hsl(${curHue2}, 50%, 3%)`);
       bgGrad.addColorStop(1, `hsl(${curHue}, 70%, 5%)`);
       ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, w, h);
+      ctx.fillRect(-20, -20, w + 40, h + 40);
 
       const scrollOffset = sp * h * 2.5;
 
@@ -601,7 +624,11 @@ export default function UniverseBackground({
       fogGrad.addColorStop(0.5, `hsla(${curHue2 - 20}, 40%, 12%, 0.03)`);
       fogGrad.addColorStop(1, `hsla(${curHue + 30}, 50%, 18%, 0.05)`);
       ctx.fillStyle = fogGrad;
-      ctx.fillRect(0, 0, w, h);
+      ctx.fillRect(-20, -20, w + 40, h + 40);
+
+      // Apply camera parallax to all space objects
+      ctx.save();
+      ctx.translate(totalPX, totalPY);
 
       // Extremely distant galaxies
       for (const dg of distantGalaxies) {
@@ -1155,6 +1182,8 @@ export default function UniverseBackground({
 
       }
 
+      ctx.restore();
+
       // Subtle vignette
       const vGrad = ctx.createRadialGradient(w / 2, h / 2, h * 0.3, w / 2, h / 2, h * 0.9);
       vGrad.addColorStop(0, 'transparent');
@@ -1170,6 +1199,7 @@ export default function UniverseBackground({
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('click', onClick);
+      window.removeEventListener('mousemove', onMouseMove);
     };
   }, [scrollProgress]);
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const NAV_ITEMS = [
   { id: 'hero', label: 'ORIGIN', idx: '00' },
@@ -31,6 +31,25 @@ export default function HudNav({
   scrollPct: number;
 }) {
   const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [velocity, setVelocity] = useState(0.008);
+  const lastPctRef = useRef(scrollPct);
+  const lastTimeRef = useRef(0);
+
+  useEffect(() => {
+    const now = performance.now();
+    const dt = Math.max(16, now - lastTimeRef.current);
+    const delta = Math.abs(scrollPct - lastPctRef.current);
+    lastPctRef.current = scrollPct;
+    lastTimeRef.current = now;
+    const v = Math.min(0.99, (delta / dt) * 1000 * 0.4 + 0.008);
+    setVelocity(v);
+  }, [scrollPct]);
+
+  useEffect(() => {
+    if (velocity <= 0.009) return;
+    const timer = setTimeout(() => setVelocity((v) => Math.max(0.008, v * 0.93)), 80);
+    return () => clearTimeout(timer);
+  }, [velocity]);
 
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
@@ -62,10 +81,10 @@ export default function HudNav({
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-400" style={{ animation: 'blink 2s ease-in-out infinite' }} />
               <span className="font-mono text-[0.6rem] sm:text-[0.65rem] tracking-[0.2em] text-emerald-300/90 hidden sm:inline">
-                SYSTEM ACTIVE
+                SYSTEM ONLINE
               </span>
               <span className="font-mono text-[0.6rem] tracking-[0.2em] text-emerald-300/90 sm:hidden">
-                ACTIVE
+                ONLINE
               </span>
             </div>
             <div className="hidden md:flex items-center gap-2 pl-4 border-l border-white/10">
@@ -109,20 +128,30 @@ export default function HudNav({
                 {REGIONS[regionIdx]}
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-16 sm:w-24 h-1 rounded-full bg-white/10 overflow-hidden">
-                <div
-                  className="h-full rounded-full transition-all duration-150"
-                  style={{
-                    width: `${scrollPct}%`,
-                    background: 'linear-gradient(90deg, #6ad0ff, #b07cff)',
-                    boxShadow: '0 0 8px rgba(106,208,255,0.6)',
-                  }}
-                />
+            <div className="flex items-center gap-3">
+              <div className="hidden sm:flex flex-col items-end">
+                <span className="font-mono text-[0.55rem] tracking-[0.15em] text-white/40 leading-none mb-1">
+                  VELOCITY
+                </span>
+                <span className="font-mono text-[0.6rem] tracking-[0.1em] text-cyan-300/80 leading-none tabular-nums">
+                  {velocity.toFixed(2)} c
+                </span>
               </div>
-              <span className="font-mono text-[0.6rem] tabular-nums text-white/60 w-8 text-right">
-                {scrollPct.toFixed(0)}%
-              </span>
+              <div className="flex items-center gap-2">
+                <div className="w-16 sm:w-24 h-1 rounded-full bg-white/10 overflow-hidden">
+                  <div
+                    className="h-full rounded-full transition-all duration-150"
+                    style={{
+                      width: `${scrollPct}%`,
+                      background: 'linear-gradient(90deg, #6ad0ff, #b07cff)',
+                      boxShadow: '0 0 8px rgba(106,208,255,0.6)',
+                    }}
+                  />
+                </div>
+                <span className="font-mono text-[0.6rem] tabular-nums text-white/60 w-8 text-right">
+                  {scrollPct.toFixed(0)}%
+                </span>
+              </div>
             </div>
           </div>
         </div>

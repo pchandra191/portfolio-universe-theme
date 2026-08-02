@@ -2,6 +2,7 @@ import { useState } from 'react';
 import UniverseBackground from '@/components/UniverseBackground';
 import StarCursor from '@/components/StarCursor';
 import HudNav from '@/components/HudNav';
+import CockpitOverlay from '@/components/CockpitOverlay';
 import SatelliteNetworkNotification from '@/components/SatelliteNetworkNotification';
 import Hero from '@/sections/Hero';
 import MissionProfile from '@/sections/MissionProfile';
@@ -28,6 +29,7 @@ function App() {
       />
       <StarCursor />
       <HudNav activeSection={activeSection} scrollPct={scrollPct} />
+      <CockpitOverlay />
       <SatelliteNetworkNotification
         show={showNetworkComplete}
         onComplete={() => setShowNetworkComplete(false)}
