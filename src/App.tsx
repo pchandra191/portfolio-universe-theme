@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import UniverseBackground from '@/components/UniverseBackground';
 import StarCursor from '@/components/StarCursor';
 import HudNav from '@/components/HudNav';
+import SatelliteNetworkNotification from '@/components/SatelliteNetworkNotification';
 import Hero from '@/sections/Hero';
 import MissionProfile from '@/sections/MissionProfile';
 import CoreEngine from '@/sections/CoreEngine';
@@ -16,12 +18,20 @@ function App() {
   const scrollProgress = useScrollProgress();
   const scrollPct = useScrollPct();
   const activeSection = useActiveSection(SECTION_IDS);
+  const [showNetworkComplete, setShowNetworkComplete] = useState(false);
 
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden">
-      <UniverseBackground scrollProgress={scrollProgress} />
+      <UniverseBackground
+        scrollProgress={scrollProgress}
+        onNetworkComplete={() => setShowNetworkComplete(true)}
+      />
       <StarCursor />
       <HudNav activeSection={activeSection} scrollPct={scrollPct} />
+      <SatelliteNetworkNotification
+        show={showNetworkComplete}
+        onComplete={() => setShowNetworkComplete(false)}
+      />
 
       <div className="relative z-10">
         <Hero />

@@ -134,6 +134,14 @@ interface Satellite {
   rotation: number;
   rotSpeed: number;
   trailCounter: number;
+  phase: 'launch' | 'orbit';
+  orbitCx: number;
+  orbitCy: number;
+  orbitRadius: number;
+  orbitAngle: number;
+  orbitSpeed: number;
+  baseScale: number;
+  travelDir: number;
 }
 
 const REGIONS = [
@@ -221,11 +229,15 @@ function makeAsteroidShape(): number[] {
 
 export default function UniverseBackground({
   scrollProgress,
+  onNetworkComplete,
 }: {
   scrollProgress: React.MutableRefObject<number>;
+  onNetworkComplete?: () => void;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rafRef = useRef<number>(0);
+  const onNetworkCompleteRef = useRef(onNetworkComplete);
+  onNetworkCompleteRef.current = onNetworkComplete;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -482,10 +494,14 @@ export default function UniverseBackground({
     let lastShooter = 0;
     let t = 0;
 
-    // Interactive satellite
-    let satellite: Satellite | null = null;
+    // Interactive satellites — up to 20, each with independent orbit
+    const satellites: Satellite[] = [];
+    const MAX_SATELLITES = 20;
+    let networkCompleteFired = false;
 
     const launchSatellite = (sx: number, sy: number) => {
+      if (satellites.length >= MAX_SATELLITES) return;
+
       // Gentle orbital trajectory — slow curved arc toward deep space
       const dirX = (Math.random() - 0.5) * 0.35;
       const dirY = -0.5 - Math.random() * 0.2;
@@ -495,7 +511,12 @@ export default function UniverseBackground({
       // Control point creates a graceful orbital curve
       const ctrlX = sx + dirX * dist * 0.35 + (Math.random() - 0.5) * w * 0.25;
       const ctrlY = sy + dirY * dist * 0.5 + (Math.random() - 0.3) * h * 0.15;
-      satellite = {
+
+      // Unique orbital parameters per satellite
+      const orbitRadius = 80 + Math.random() * 140;
+      const orbitSpeed = 0.0003 + Math.random() * 0.0005;
+
+      satellites.push({
         x: sx,
         y: sy,
         startX: sx,
@@ -512,7 +533,20 @@ export default function UniverseBackground({
         rotation: 0,
         rotSpeed: 0.002 + (Math.random() - 0.5) * 0.002,
         trailCounter: 0,
-      };
+        phase: 'launch',
+        orbitCx: endX,
+        orbitCy: endY,
+        orbitRadius,
+        orbitAngle: 0,
+        orbitSpeed,
+        baseScale: 0.45 + Math.random() * 0.2,
+        travelDir: 0,
+      });
+
+      if (satellites.length >= MAX_SATELLITES && !networkCompleteFired) {
+        networkCompleteFired = true;
+        onNetworkCompleteRef.current?.();
+      }
     };
 
     const onClick = (e: MouseEvent) => {
@@ -955,35 +989,59 @@ export default function UniverseBackground({
         if (sh.life > sh.maxLife) shooters.splice(i, 1);
       }
 
-      // Interactive satellite — launched on background click
-      if (satellite) {
-        const sat = satellite;
+      // Interactive satellites — launched on background clicks
+      for (let si = 0; si < satellites.length; si++) {
+        const sat = satellites[si];
         sat.t += 16;
-        const progress = Math.min(1, sat.t / sat.duration);
-        const inv = 1 - progress;
-        // Quadratic bezier — gentle orbital arc
-        sat.x = inv * inv * sat.startX + 2 * inv * progress * sat.ctrlX + progress * progress * sat.endX;
-        sat.y = inv * inv * sat.startY + 2 * inv * progress * sat.ctrlY + progress * progress * sat.endY;
-        // Slowly shrink only as it moves into deep space
-        sat.scale = 1 - progress * 0.5;
 
-        // Direction of travel from bezier tangent
-        const tdx = 2 * inv * (sat.ctrlX - sat.startX) + 2 * progress * (sat.endX - sat.ctrlX);
-        const tdy = 2 * inv * (sat.ctrlY - sat.startY) + 2 * progress * (sat.endY - sat.ctrlY);
-        const travelDir = Math.atan2(tdy, tdx);
+        if (sat.phase === 'launch') {
+          const progress = Math.min(1, sat.t / sat.duration);
+          const inv = 1 - progress;
+          // Quadratic bezier — gentle orbital arc
+          sat.x = inv * inv * sat.startX + 2 * inv * progress * sat.ctrlX + progress * progress * sat.endX;
+          sat.y = inv * inv * sat.startY + 2 * inv * progress * sat.ctrlY + progress * progress * sat.endY;
+          // Slowly shrink only as it moves into deep space
+          sat.scale = 1 - progress * (1 - sat.baseScale);
 
-        // Slow roll/yaw rotation
-        sat.rotation += sat.rotSpeed;
+          // Direction of travel from bezier tangent
+          const tdx = 2 * inv * (sat.ctrlX - sat.startX) + 2 * progress * (sat.endX - sat.ctrlX);
+          const tdy = 2 * inv * (sat.ctrlY - sat.startY) + 2 * progress * (sat.endY - sat.ctrlY);
+          sat.travelDir = Math.atan2(tdy, tdx);
 
-        // Flame fades after initial boost (first ~18% of journey)
-        if (progress > 0.18) {
-          sat.flame = Math.max(0, sat.flame - 0.015);
-        }
+          // Slow roll/yaw rotation
+          sat.rotation += sat.rotSpeed;
 
-        // Spawn ion trail particles — sparse, fading
-        sat.trailCounter++;
-        if (sat.trailCounter % 2 === 0 && progress < 0.98) {
-          sat.trail.push({ x: sat.x, y: sat.y, life: 0, maxLife: 100 });
+          // Flame fades after initial boost (first ~18% of journey)
+          if (progress > 0.18) {
+            sat.flame = Math.max(0, sat.flame - 0.015);
+          }
+
+          // Spawn ion trail particles — sparse, fading
+          sat.trailCounter++;
+          if (sat.trailCounter % 2 === 0 && progress < 0.98) {
+            sat.trail.push({ x: sat.x, y: sat.y, life: 0, maxLife: 100 });
+          }
+
+          // Transition to orbital drift
+          if (progress >= 1) {
+            sat.phase = 'orbit';
+            sat.scale = sat.baseScale;
+            sat.orbitAngle = sat.travelDir + Math.PI / 2;
+          }
+        } else {
+          // Orbital drift — slow circular path, unique per satellite
+          sat.orbitAngle += sat.orbitSpeed;
+          sat.x = sat.orbitCx + Math.cos(sat.orbitAngle) * sat.orbitRadius;
+          sat.y = sat.orbitCy + Math.sin(sat.orbitAngle) * sat.orbitRadius;
+          sat.travelDir = sat.orbitAngle + Math.PI / 2;
+          sat.rotation += sat.rotSpeed;
+          sat.flame = 0;
+
+          // Faint ion trail in orbit
+          sat.trailCounter++;
+          if (sat.trailCounter % 4 === 0) {
+            sat.trail.push({ x: sat.x, y: sat.y, life: 0, maxLife: 80 });
+          }
         }
 
         // Draw ion trail — faint blue-white, gradually disappearing
@@ -1003,11 +1061,11 @@ export default function UniverseBackground({
         }
 
         // Draw satellite (only if still visible)
-        if (progress < 1 && sat.scale > 0.05) {
+        if (sat.scale > 0.05) {
           const sz = 10 * sat.scale;
           ctx.save();
           ctx.translate(sat.x, sat.y);
-          ctx.rotate(travelDir + Math.PI / 2 + sat.rotation);
+          ctx.rotate(sat.travelDir + Math.PI / 2 + sat.rotation);
 
           const bodyW = sz;
           const bodyH = sz * 0.65;
@@ -1095,10 +1153,6 @@ export default function UniverseBackground({
           ctx.restore();
         }
 
-        // Remove when done and trail faded
-        if (progress >= 1 && sat.trail.length === 0) {
-          satellite = null;
-        }
       }
 
       // Subtle vignette

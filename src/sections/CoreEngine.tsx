@@ -2,22 +2,22 @@ import { useState } from 'react';
 import { useInView } from '@/hooks/useScroll';
 
 const TECHS = [
-  { name: 'Symfony', angle: 0, ring: 0, color: '#6ad0ff', size: 38 },
-  { name: 'Laravel', angle: 51, ring: 0, color: '#ff7c7c', size: 34 },
-  { name: 'React', angle: 103, ring: 0, color: '#6ad0ff', size: 40 },
-  { name: 'JavaScript', angle: 154, ring: 0, color: '#ffd27a', size: 36 },
-  { name: 'Node.js', angle: 205, ring: 0, color: '#7cffa0', size: 34 },
-  { name: 'PHP', angle: 257, ring: 0, color: '#b07cff', size: 32 },
-  { name: 'AWS', angle: 309, ring: 0, color: '#ffd27a', size: 36 },
-  { name: 'MySQL', angle: 25, ring: 1, color: '#7cd0ff', size: 30 },
-  { name: 'MongoDB', angle: 90, ring: 1, color: '#7cffa0', size: 30 },
-  { name: 'Linux', angle: 155, ring: 1, color: '#ffd27a', size: 28 },
-  { name: 'Docker', angle: 220, ring: 1, color: '#6ad0ff', size: 30 },
-  { name: 'Git', angle: 285, ring: 1, color: '#ff7c7c', size: 28 },
-  { name: 'REST APIs', angle: 340, ring: 1, color: '#b07cff', size: 32 },
+  { name: 'Symfony', angle: 0, ring: 0, color: '#6ad0ff', size: 51 },
+  { name: 'Laravel', angle: 51, ring: 0, color: '#ff7c7c', size: 46 },
+  { name: 'React', angle: 103, ring: 0, color: '#6ad0ff', size: 54 },
+  { name: 'JavaScript', angle: 154, ring: 0, color: '#ffd27a', size: 49 },
+  { name: 'Node.js', angle: 205, ring: 0, color: '#7cffa0', size: 46 },
+  { name: 'PHP', angle: 257, ring: 0, color: '#b07cff', size: 43 },
+  { name: 'AWS', angle: 309, ring: 0, color: '#ffd27a', size: 49 },
+  { name: 'MySQL', angle: 25, ring: 1, color: '#7cd0ff', size: 41 },
+  { name: 'MongoDB', angle: 90, ring: 1, color: '#7cffa0', size: 41 },
+  { name: 'Linux', angle: 155, ring: 1, color: '#ffd27a', size: 38 },
+  { name: 'Docker', angle: 220, ring: 1, color: '#6ad0ff', size: 41 },
+  { name: 'Git', angle: 285, ring: 1, color: '#ff7c7c', size: 38 },
+  { name: 'REST APIs', angle: 340, ring: 1, color: '#b07cff', size: 43 },
 ];
 
-const RING_RADII = [180, 280];
+const RING_RADII = [245, 380];
 const RING_SPEEDS = [40, 55];
 
 export default function CoreEngine() {
@@ -44,7 +44,7 @@ export default function CoreEngine() {
         </div>
 
         {/* Orbit visualization */}
-        <div className="relative flex items-center justify-center" style={{ height: '640px' }}>
+        <div className="relative flex items-center justify-center" style={{ height: '820px' }}>
           {/* Orbit rings */}
           {RING_RADII.map((r, i) => (
             <div
@@ -62,19 +62,19 @@ export default function CoreEngine() {
           {/* Center core */}
           <div className="absolute z-10 flex items-center justify-center">
             <div
-              className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full flex items-center justify-center"
+              className="relative w-44 h-44 sm:w-56 sm:h-56 rounded-full flex items-center justify-center"
               style={{
                 background: 'radial-gradient(circle at 35% 35%, rgba(106,208,255,0.3), rgba(176,124,255,0.15), rgba(0,0,20,0.6))',
                 border: '1px solid rgba(106,208,255,0.3)',
-                boxShadow: '0 0 60px rgba(106,208,255,0.3), inset 0 0 30px rgba(106,208,255,0.15)',
+                boxShadow: '0 0 80px rgba(106,208,255,0.3), inset 0 0 40px rgba(106,208,255,0.15)',
                 animation: 'pulse-glow 4s ease-in-out infinite',
               }}
             >
               <div className="text-center">
-                <div className="font-mono text-[0.5rem] tracking-[0.25em] text-cyan-300/60 mb-1">
+                <div className="font-mono text-[0.6rem] tracking-[0.25em] text-cyan-300/60 mb-1">
                   CORE
                 </div>
-                <div className="font-display text-lg sm:text-xl font-bold text-white/90">
+                <div className="font-display text-xl sm:text-2xl font-bold text-white/90">
                   ENGINE
                 </div>
               </div>
@@ -126,7 +126,7 @@ export default function CoreEngine() {
                     }}
                   >
                     <span
-                      className="font-mono text-[0.5rem] sm:text-[0.55rem] font-medium tracking-tight text-center px-1 leading-tight transition-all"
+                      className="font-mono text-[0.6rem] sm:text-[0.65rem] font-medium tracking-tight text-center px-1 leading-tight transition-all"
                       style={{ color: isHovered ? '#fff' : 'rgba(255,255,255,0.75)' }}
                     >
                       {tech.name}
@@ -143,7 +143,7 @@ export default function CoreEngine() {
           {TECHS.map((t) => (
             <span
               key={t.name}
-              className="font-mono text-[0.55rem] tracking-[0.12em] px-3 py-1.5 rounded-full glass"
+              className="font-mono text-[0.65rem] tracking-[0.12em] px-3 py-1.5 rounded-full glass"
               style={{ color: 'rgba(255,255,255,0.5)' }}
             >
               {t.name}
