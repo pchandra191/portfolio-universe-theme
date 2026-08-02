@@ -10,17 +10,6 @@ interface Star {
   hue: number;
 }
 
-interface Particle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  life: number;
-  maxLife: number;
-  r: number;
-  hue: number;
-}
-
 interface Shooter {
   x: number;
   y: number;
@@ -29,22 +18,6 @@ interface Shooter {
   life: number;
   maxLife: number;
   len: number;
-}
-
-interface Nebula {
-  x: number;
-  y: number;
-  r: number;
-  hue: number;
-  hue2: number;
-  drift: number;
-}
-
-interface RichNebula {
-  x: number;
-  y: number;
-  lobes: { dx: number; dy: number; r: number; hue: number; hue2: number }[];
-  parallax: number;
 }
 
 interface Galaxy {
@@ -58,16 +31,6 @@ interface Galaxy {
   tilt: number;
   parallax: number;
   type: 'spiral' | 'elliptical';
-}
-
-interface Planet {
-  x: number;
-  y: number;
-  r: number;
-  type: 'ringed' | 'rocky' | 'ice' | 'moon' | 'gasGiant' | 'dwarf';
-  hue: number;
-  parallax: number;
-  ringTilt: number;
 }
 
 interface Cluster {
@@ -108,13 +71,6 @@ interface Comet {
   maxLife: number;
   tailLen: number;
   hue: number;
-}
-
-interface DistantSat {
-  x: number;
-  y: number;
-  parallax: number;
-  tw: number;
 }
 
 interface Satellite {
@@ -227,6 +183,711 @@ function makeAsteroidShape(): number[] {
   return pts;
 }
 
+function SaturnPlanet() {
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        top: -120,
+        right: -140,
+        width: 460,
+        height: 460,
+        opacity: 0.28,
+        pointerEvents: 'none',
+        zIndex: 1,
+      }}
+    >
+      {/* Distant halo / atmospheric scattering */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: '-18%',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(220,200,160,0.08) 28%, rgba(200,180,140,0.04) 48%, transparent 72%)',
+          filter: 'blur(16px)',
+        }}
+      />
+
+      {/* Back ring layers — C ring (inner, faint) */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: '-16px',
+          borderRadius: '50%',
+          border: '40px solid transparent',
+          borderTopColor: 'rgba(170,145,100,0.035)',
+          borderBottomColor: 'rgba(170,145,100,0.035)',
+          transform: 'rotateX(74deg)',
+        }}
+      />
+      {/* Back B ring */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: '-22px',
+          borderRadius: '50%',
+          border: '24px solid transparent',
+          borderTopColor: 'rgba(195,170,125,0.07)',
+          borderBottomColor: 'rgba(195,170,125,0.07)',
+          transform: 'rotateX(74deg)',
+        }}
+      />
+      {/* Cassini division */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: '-20px',
+          borderRadius: '50%',
+          border: '6px solid transparent',
+          borderTopColor: 'rgba(0,0,0,0.14)',
+          borderBottomColor: 'rgba(0,0,0,0.14)',
+          transform: 'rotateX(74deg)',
+        }}
+      />
+      {/* Back A ring */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: '-28px',
+          borderRadius: '50%',
+          border: '16px solid transparent',
+          borderTopColor: 'rgba(185,160,115,0.055)',
+          borderBottomColor: 'rgba(185,160,115,0.055)',
+          transform: 'rotateX(74deg)',
+        }}
+      />
+
+      {/* Planet body — ultra-realistic gas giant */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: '5%',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle at 24% 24%, rgba(255,248,230,0.97), rgba(245,222,172,0.92), rgba(220,185,135,0.84), rgba(190,150,95,0.74), rgba(150,110,60,0.64), rgba(105,75,32,0.52), rgba(55,35,12,0.4))',
+          boxShadow:
+            'inset -28px -24px 70px rgba(0,0,0,0.58), ' +
+            'inset 10px 10px 35px rgba(255,250,235,0.25), ' +
+            '0 0 120px rgba(225,195,145,0.14)',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Multi-frequency cloud bands — 4 overlapping frequencies */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            borderRadius: '50%',
+            background:
+              'repeating-linear-gradient(0deg, transparent 0px, transparent 4px, rgba(0,0,0,0.055) 4px, rgba(0,0,0,0.055) 6px)' +
+              ', repeating-linear-gradient(0deg, transparent 0px, transparent 12px, rgba(255,255,255,0.022) 12px, rgba(255,255,255,0.022) 14px)' +
+              ', repeating-linear-gradient(0deg, transparent 0px, transparent 22px, rgba(0,0,0,0.04) 22px, rgba(0,0,0,0.04) 24px)' +
+              ', repeating-linear-gradient(0deg, transparent 0px, transparent 38px, rgba(255,255,255,0.014) 38px, rgba(255,255,255,0.014) 40px)',
+            animation: 'planet-spin 750s linear infinite',
+          }}
+        />
+        {/* North equatorial bright zone */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '26%',
+            left: 0,
+            right: 0,
+            height: '7%',
+            background: 'linear-gradient(to bottom, rgba(255,255,255,0.055), transparent 42%, rgba(0,0,0,0.03))',
+            borderRadius: '50%',
+            filter: 'blur(7px)',
+          }}
+        />
+        {/* South equatorial dark belt */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '54%',
+            left: 0,
+            right: 0,
+            height: '11%',
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.045), transparent 32%, rgba(255,255,255,0.018), transparent 62%, rgba(0,0,0,0.04))',
+            borderRadius: '50%',
+            filter: 'blur(6px)',
+          }}
+        />
+        {/* Polar flattening and darkening */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            borderRadius: '50%',
+            background: 'radial-gradient(ellipse at 50% 50%, transparent 32%, rgba(0,0,0,0.08) 78%, rgba(0,0,0,0.16) 100%)',
+          }}
+        />
+        {/* Subtle terminator glow — soft day/night boundary */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            borderRadius: '50%',
+            background: 'radial-gradient(ellipse at 72% 68%, rgba(255,225,185,0.07) 0%, transparent 48%)',
+          }}
+        />
+        {/* Faint storm feature */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '40%',
+            left: '25%',
+            width: '22%',
+            height: '6%',
+            borderRadius: '50%',
+            background: 'radial-gradient(ellipse, rgba(255,255,255,0.03), transparent 70%)',
+            filter: 'blur(4px)',
+          }}
+        />
+      </div>
+
+      {/* Ring shadow cast onto planet surface */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: '5%',
+          borderRadius: '50%',
+          boxShadow:
+            'inset 0 16px 40px -12px rgba(0,0,0,0.35), ' +
+            'inset 0 -12px 30px -10px rgba(0,0,0,0.25)',
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* Front ring layers — A ring */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: '-32px',
+          borderRadius: '50%',
+          border: '16px solid transparent',
+          borderTopColor: 'rgba(225,200,155,0.2)',
+          borderBottomColor: 'rgba(225,200,155,0.2)',
+          transform: 'rotateX(74deg)',
+          boxShadow: '0 0 40px rgba(215,185,135,0.1)',
+        }}
+      />
+      {/* Cassini division front */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: '-24px',
+          borderRadius: '50%',
+          border: '5px solid transparent',
+          borderTopColor: 'rgba(0,0,0,0.14)',
+          borderBottomColor: 'rgba(0,0,0,0.14)',
+          transform: 'rotateX(74deg)',
+        }}
+      />
+      {/* B ring front */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: '-16px',
+          borderRadius: '50%',
+          border: '22px solid transparent',
+          borderTopColor: 'rgba(205,180,135,0.13)',
+          borderBottomColor: 'rgba(205,180,135,0.13)',
+          transform: 'rotateX(74deg)',
+        }}
+      />
+      {/* C ring front */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: '-8px',
+          borderRadius: '50%',
+          border: '28px solid transparent',
+          borderTopColor: 'rgba(185,160,115,0.06)',
+          borderBottomColor: 'rgba(185,160,115,0.06)',
+          transform: 'rotateX(74deg)',
+        }}
+      />
+      {/* Faint outer ring */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: '-44px',
+          borderRadius: '50%',
+          border: '8px solid transparent',
+          borderTopColor: 'rgba(205,180,135,0.04)',
+          borderBottomColor: 'rgba(205,180,135,0.04)',
+          transform: 'rotateX(74deg)',
+        }}
+      />
+
+      {/* Small icy moon — Titan-like */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          width: 0,
+          height: 0,
+          animation: 'moon-orbit-saturn 45s linear infinite',
+        }}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            top: -210,
+            right: -20,
+            width: 40,
+            height: 40,
+            opacity: 0.55,
+            pointerEvents: 'none',
+            borderRadius: '50%',
+            background: 'radial-gradient(circle at 28% 28%, rgba(245,240,225,0.96), rgba(210,200,180,0.88), rgba(160,150,130,0.68), rgba(90,85,70,0.48))',
+            boxShadow:
+              'inset -6px -5px 12px rgba(0,0,0,0.55), ' +
+              'inset 4px 4px 8px rgba(255,255,255,0.3), ' +
+              '0 0 20px rgba(225,215,195,0.12)',
+          }}
+        >
+          {/* Surface detail on moon */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              borderRadius: '50%',
+              background: 'repeating-linear-gradient(0deg, transparent 0px, transparent 3px, rgba(0,0,0,0.035) 3px, rgba(0,0,0,0.035) 4px)',
+              animation: 'planet-spin 1200s linear infinite',
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Tiny asteroid fragments near Saturn */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '32%',
+          right: '16%',
+          width: 2.5,
+          height: 2.5,
+          borderRadius: '50%',
+          background: 'rgba(190,180,160,0.4)',
+          boxShadow:
+            '5px 3px 0 0 rgba(170,160,140,0.25), ' +
+            '-3px 9px 0 0 rgba(150,140,120,0.18), ' +
+            '8px -7px 0 0 rgba(160,150,130,0.2), ' +
+            '-8px -3px 0 0 rgba(140,130,110,0.15)',
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* Tiny distant stars partially hidden behind planet */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '22%',
+          left: '46%',
+          width: 1.5,
+          height: 1.5,
+          borderRadius: '50%',
+          background: 'rgba(255,255,255,0.55)',
+          boxShadow: '0 0 4px rgba(255,255,255,0.3)',
+          pointerEvents: 'none',
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          top: '68%',
+          left: '40%',
+          width: 1,
+          height: 1,
+          borderRadius: '50%',
+          background: 'rgba(255,255,255,0.45)',
+          boxShadow: '0 0 3px rgba(255,255,255,0.22)',
+          pointerEvents: 'none',
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          top: '45%',
+          left: '55%',
+          width: 1.2,
+          height: 1.2,
+          borderRadius: '50%',
+          background: 'rgba(255,255,255,0.4)',
+          boxShadow: '0 0 2px rgba(255,255,255,0.18)',
+          pointerEvents: 'none',
+        }}
+      />
+    </div>
+  );
+}
+
+function NeptunePlanet() {
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        top: '42%',
+        left: '4%',
+        width: 140,
+        height: 140,
+        opacity: 0.2,
+        pointerEvents: 'none',
+        zIndex: 1,
+      }}
+    >
+      {/* Atmospheric scattering layers */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: '-18%',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(120,190,255,0.1) 25%, rgba(80,150,220,0.05) 45%, transparent 68%)',
+          filter: 'blur(8px)',
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          inset: '-10%',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(100,170,240,0.08) 30%, rgba(60,120,200,0.03) 55%, transparent 72%)',
+          filter: 'blur(4px)',
+        }}
+      />
+
+      {/* Planet body — deep blue ice giant */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: '3%',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle at 26% 26%, rgba(175,225,250,0.96), rgba(120,195,235,0.9), rgba(70,150,200,0.82), rgba(35,105,155,0.72), rgba(18,65,105,0.62), rgba(8,35,60,0.48))',
+          boxShadow:
+            'inset -14px -12px 32px rgba(0,0,0,0.48), ' +
+            'inset 5px 5px 16px rgba(160,220,255,0.16), ' +
+            '0 0 50px rgba(90,160,230,0.12)',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Thin cloud bands — multiple frequencies */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            borderRadius: '50%',
+            background:
+              'repeating-linear-gradient(0deg, transparent 0px, transparent 10px, rgba(255,255,255,0.028) 10px, rgba(255,255,255,0.028) 12px)' +
+              ', repeating-linear-gradient(0deg, transparent 0px, transparent 22px, rgba(0,0,0,0.03) 22px, rgba(0,0,0,0.03) 24px)' +
+              ', repeating-linear-gradient(0deg, transparent 0px, transparent 35px, rgba(255,255,255,0.012) 35px, rgba(255,255,255,0.012) 37px)',
+            animation: 'planet-spin 650s linear infinite',
+          }}
+        />
+        {/* Great Dark Spot — storm feature */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '44%',
+            left: '30%',
+            width: '24%',
+            height: '14%',
+            borderRadius: '50%',
+            background: 'radial-gradient(ellipse at 40% 40%, rgba(0,0,0,0.18), rgba(0,0,0,0.08) 45%, transparent 72%)',
+            filter: 'blur(4px)',
+          }}
+        />
+        {/* Subtle companion storm */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '52%',
+            left: '55%',
+            width: '12%',
+            height: '7%',
+            borderRadius: '50%',
+            background: 'radial-gradient(ellipse, rgba(0,0,0,0.1), transparent 70%)',
+            filter: 'blur(3px)',
+          }}
+        />
+        {/* Soft terminator */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            borderRadius: '50%',
+            background: 'radial-gradient(ellipse at 68% 65%, rgba(140,210,255,0.06) 0%, transparent 45%)',
+          }}
+        />
+      </div>
+
+      {/* Tiny distant moon — Triton-like */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          width: 0,
+          height: 0,
+          animation: 'moon-orbit-neptune 30s linear infinite reverse',
+        }}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            top: -50,
+            right: -12,
+            width: 24,
+            height: 24,
+            opacity: 0.45,
+            pointerEvents: 'none',
+            borderRadius: '50%',
+            background: 'radial-gradient(circle at 32% 32%, rgba(220,215,200,0.92), rgba(170,165,150,0.7), rgba(100,95,80,0.45))',
+            boxShadow:
+              'inset -3px -3px 7px rgba(0,0,0,0.48), ' +
+              'inset 2px 2px 4px rgba(255,255,255,0.22), ' +
+              '0 0 10px rgba(200,195,180,0.08)',
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function MarsPlanet() {
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        top: '65%',
+        right: '4%',
+        width: 120,
+        height: 120,
+        opacity: 0.18,
+        pointerEvents: 'none',
+        zIndex: 1,
+      }}
+    >
+      {/* Atmospheric scattering */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: '-12%',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(210,150,110,0.1) 32%, rgba(170,110,70,0.05) 52%, transparent 72%)',
+          filter: 'blur(6px)',
+        }}
+      />
+
+      {/* Planet body — detailed rocky surface */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: '3%',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle at 28% 28%, rgba(245,190,150,0.96), rgba(220,150,100,0.9), rgba(195,115,65,0.82), rgba(165,80,35,0.72), rgba(130,50,20,0.62), rgba(85,28,8,0.48))',
+          boxShadow:
+            'inset -14px -12px 32px rgba(0,0,0,0.48), ' +
+            'inset 5px 5px 14px rgba(255,210,170,0.14), ' +
+            '0 0 40px rgba(190,110,65,0.08)',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Surface texture — regolith and dust */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            borderRadius: '50%',
+            background:
+              'repeating-linear-gradient(0deg, transparent 0px, transparent 4px, rgba(0,0,0,0.04) 4px, rgba(0,0,0,0.04) 5px)' +
+              ', repeating-linear-gradient(0deg, transparent 0px, transparent 11px, rgba(255,255,255,0.015) 11px, rgba(255,255,255,0.015) 12px)',
+            animation: 'planet-spin 500s linear infinite',
+          }}
+        />
+        {/* Mountain range hints */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '18%',
+            left: '10%',
+            right: '10%',
+            height: '8%',
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.06), transparent 60%, rgba(255,200,160,0.02))',
+            borderRadius: '50%',
+            filter: 'blur(3px)',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            top: '72%',
+            left: '15%',
+            right: '15%',
+            height: '6%',
+            background: 'linear-gradient(to bottom, transparent, rgba(0,0,0,0.04) 40%, rgba(255,180,140,0.015))',
+            borderRadius: '50%',
+            filter: 'blur(2px)',
+          }}
+        />
+        {/* Valley / canyon hint */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '42%',
+            left: '20%',
+            width: '35%',
+            height: '3%',
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.05), transparent)',
+            borderRadius: '50%',
+            filter: 'blur(2px)',
+            transform: 'rotate(-8deg)',
+          }}
+        />
+        {/* Large craters — Olympus Mons region */}
+        <div
+          style={{
+            position: 'absolute',
+            width: '32%',
+            height: '32%',
+            borderRadius: '50%',
+            background: 'radial-gradient(circle at 32% 32%, rgba(0,0,0,0.2), rgba(0,0,0,0.09) 48%, transparent 72%)',
+            top: '16%',
+            left: '14%',
+            boxShadow: 'inset -3px -3px 6px rgba(0,0,0,0.35)',
+          }}
+        />
+        {/* Medium crater */}
+        <div
+          style={{
+            position: 'absolute',
+            width: '20%',
+            height: '20%',
+            borderRadius: '50%',
+            background: 'radial-gradient(circle at 32% 32%, rgba(0,0,0,0.17), rgba(0,0,0,0.07) 48%, transparent 72%)',
+            top: '48%',
+            left: '42%',
+            boxShadow: 'inset -2px -2px 4px rgba(0,0,0,0.28)',
+          }}
+        />
+        {/* Small crater cluster */}
+        <div
+          style={{
+            position: 'absolute',
+            width: '12%',
+            height: '12%',
+            borderRadius: '50%',
+            background: 'radial-gradient(circle at 32% 32%, rgba(0,0,0,0.14), rgba(0,0,0,0.05) 48%, transparent 72%)',
+            top: '28%',
+            left: '56%',
+            boxShadow: 'inset -1px -1px 2px rgba(0,0,0,0.22)',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            width: '8%',
+            height: '8%',
+            borderRadius: '50%',
+            background: 'radial-gradient(circle at 32% 32%, rgba(0,0,0,0.12), transparent 72%)',
+            top: '62%',
+            left: '22%',
+          }}
+        />
+        {/* Dust storm region — Hellas Planitia */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '58%',
+            left: '8%',
+            width: '40%',
+            height: '28%',
+            background: 'radial-gradient(ellipse, rgba(180,100,60,0.1), rgba(200,130,80,0.05) 50%, transparent 72%)',
+            borderRadius: '50%',
+            filter: 'blur(5px)',
+          }}
+        />
+        {/* Northern polar ice cap */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: '18%',
+            right: '18%',
+            height: '16%',
+            background: 'linear-gradient(to bottom, rgba(240,235,225,0.3), rgba(230,220,210,0.15) 50%, transparent)',
+            borderRadius: '50%',
+            filter: 'blur(3px)',
+          }}
+        />
+        {/* Southern polar cap hint */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: '25%',
+            right: '25%',
+            height: '10%',
+            background: 'linear-gradient(to top, rgba(235,230,220,0.18), transparent)',
+            borderRadius: '50%',
+            filter: 'blur(2px)',
+          }}
+        />
+        {/* Soft terminator */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            borderRadius: '50%',
+            background: 'radial-gradient(ellipse at 65% 60%, rgba(255,200,150,0.05) 0%, transparent 42%)',
+          }}
+        />
+      </div>
+
+      {/* Small moon — Phobos-like */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          width: 0,
+          height: 0,
+          animation: 'moon-orbit-mars 20s linear infinite',
+        }}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            top: -40,
+            right: -8,
+            width: 16,
+            height: 16,
+            opacity: 0.5,
+            pointerEvents: 'none',
+            borderRadius: '50%',
+            background: 'radial-gradient(circle at 30% 30%, rgba(200,195,180,0.9), rgba(150,145,130,0.65), rgba(80,75,60,0.4))',
+            boxShadow:
+              'inset -2px -2px 4px rgba(0,0,0,0.45), ' +
+              'inset 1px 1px 2px rgba(255,255,255,0.2), ' +
+              '0 0 8px rgba(180,170,150,0.06)',
+          }}
+        >
+          {/* Irregular shape hint on Phobos */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              borderRadius: '50%',
+              background: 'repeating-linear-gradient(45deg, transparent 0px, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 3px)',
+              animation: 'planet-spin 900s linear infinite',
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function UniverseBackground({
   scrollProgress,
   onNetworkComplete,
@@ -236,6 +897,9 @@ export default function UniverseBackground({
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rafRef = useRef<number>(0);
+  const saturnRef = useRef<HTMLDivElement>(null);
+  const neptuneRef = useRef<HTMLDivElement>(null);
+  const marsRef = useRef<HTMLDivElement>(null);
   const onNetworkCompleteRef = useRef(onNetworkComplete);
   onNetworkCompleteRef.current = onNetworkComplete;
 
@@ -269,68 +933,23 @@ export default function UniverseBackground({
       });
     }
 
-    const nebulae: Nebula[] = [];
-    for (let i = 0; i < 7; i++) {
-      nebulae.push({
-        x: Math.random() * w,
-        y: Math.random() * h * 3,
-        r: 200 + Math.random() * 300,
-        hue: 200 + Math.random() * 120,
-        hue2: 260 + Math.random() * 100,
-        drift: 0.1 + Math.random() * 0.2,
-      });
-    }
-
-    // Rich multi-lobe nebulae — Orion, Eagle, Carina, Pillars inspired
-    const richNebulae: RichNebula[] = [
+    // Two very subtle nebula clouds — blue and purple, NASA-inspired
+    const subtleNebulae: { x: number; y: number; r: number; hue: number; hue2: number; parallax: number }[] = [
       {
-        // Orion Nebula — blue-green with pink core
-        x: w * 0.2, y: h * 0.4, parallax: 0.18,
-        lobes: [
-          { dx: 0, dy: 0, r: 180, hue: 200, hue2: 280 },
-          { dx: 40, dy: -30, r: 120, hue: 170, hue2: 300 },
-          { dx: -30, dy: 40, r: 100, hue: 320, hue2: 200 },
-          { dx: 60, dy: 20, r: 80, hue: 280, hue2: 220 },
-        ],
+        x: w * 0.15,
+        y: h * 1.2,
+        r: 350,
+        hue: 210,
+        hue2: 200,
+        parallax: 0.12,
       },
       {
-        // Eagle Nebula — golden pillars
-        x: w * 0.75, y: h * 1.1, parallax: 0.2,
-        lobes: [
-          { dx: 0, dy: 0, r: 160, hue: 30, hue2: 200 },
-          { dx: 30, dy: -50, r: 100, hue: 200, hue2: 30 },
-          { dx: -20, dy: 30, r: 90, hue: 45, hue2: 180 },
-          { dx: 50, dy: 10, r: 70, hue: 190, hue2: 40 },
-        ],
-      },
-      {
-        // Carina Nebula — pink and teal
-        x: w * 0.3, y: h * 1.7, parallax: 0.22,
-        lobes: [
-          { dx: 0, dy: 0, r: 170, hue: 320, hue2: 180 },
-          { dx: -40, dy: -20, r: 110, hue: 190, hue2: 300 },
-          { dx: 35, dy: 35, r: 95, hue: 280, hue2: 170 },
-          { dx: -15, dy: 50, r: 75, hue: 330, hue2: 200 },
-        ],
-      },
-      {
-        // Pillars of Creation — dusty columns, deep teal and amber
-        x: w * 0.7, y: h * 2.2, parallax: 0.16,
-        lobes: [
-          { dx: 0, dy: 0, r: 150, hue: 180, hue2: 30 },
-          { dx: 25, dy: -40, r: 90, hue: 40, hue2: 190 },
-          { dx: -35, dy: 25, r: 100, hue: 190, hue2: 40 },
-          { dx: 45, dy: 30, r: 65, hue: 30, hue2: 200 },
-        ],
-      },
-      {
-        // Extra violet nebula
-        x: w * 0.5, y: h * 2.7, parallax: 0.2,
-        lobes: [
-          { dx: 0, dy: 0, r: 200, hue: 260, hue2: 200 },
-          { dx: 50, dy: -30, r: 130, hue: 220, hue2: 280 },
-          { dx: -40, dy: 40, r: 110, hue: 290, hue2: 210 },
-        ],
+        x: w * 0.8,
+        y: h * 2.1,
+        r: 300,
+        hue: 265,
+        hue2: 260,
+        parallax: 0.1,
       },
     ];
 
@@ -377,25 +996,6 @@ export default function UniverseBackground({
         parallax: 0.08 + Math.random() * 0.06,
       });
     }
-
-    // Planets — varied types, partially off-screen for scale
-    const planets: Planet[] = [
-      { x: -40, y: h * 0.25, r: 90, type: 'ringed', hue: 35, parallax: 0.55, ringTilt: -0.35 },
-      { x: w + 30, y: h * 0.7, r: 70, type: 'rocky', hue: 15, parallax: 0.5, ringTilt: 0 },
-      { x: w - 60, y: h * 1.4, r: 85, type: 'ice', hue: 200, parallax: 0.6, ringTilt: 0 },
-      { x: -30, y: h * 1.8, r: 60, type: 'rocky', hue: 25, parallax: 0.5, ringTilt: 0 },
-      { x: w + 40, y: h * 2.3, r: 95, type: 'ringed', hue: 30, parallax: 0.55, ringTilt: 0.3 },
-      { x: -50, y: h * 2.6, r: 75, type: 'ice', hue: 195, parallax: 0.58, ringTilt: 0 },
-      // Jupiter-like gas giant
-      { x: w + 60, y: h * 0.45, r: 110, type: 'gasGiant', hue: 30, parallax: 0.52, ringTilt: 0 },
-      // Small moons
-      { x: w * 0.15, y: h * 1.0, r: 22, type: 'moon', hue: 210, parallax: 0.65, ringTilt: 0 },
-      { x: w * 0.85, y: h * 1.6, r: 18, type: 'moon', hue: 40, parallax: 0.62, ringTilt: 0 },
-      { x: w * 0.4, y: h * 2.5, r: 25, type: 'moon', hue: 200, parallax: 0.6, ringTilt: 0 },
-      // Distant dwarf planet
-      { x: w * 0.6, y: h * 0.35, r: 14, type: 'dwarf', hue: 20, parallax: 0.45, ringTilt: 0 },
-      { x: w * 0.25, y: h * 2.8, r: 12, type: 'dwarf', hue: 190, parallax: 0.42, ringTilt: 0 },
-    ];
 
     // Star clusters — pre-compute star positions so they don't flicker
     const clusters: (Cluster & { stars: { dx: number; dy: number; r: number; hueOff: number; a: number }[] })[] = [];
@@ -585,23 +1185,14 @@ export default function UniverseBackground({
       const curHue = r1.hue + (r2.hue - r1.hue) * blend;
       const curHue2 = r1.hue2 + (r2.hue2 - r1.hue2) * blend;
 
-      // Deep space base gradient — never pure black
-      const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
-      bgGrad.addColorStop(0, `hsl(${curHue}, 60%, 4%)`);
-      bgGrad.addColorStop(0.5, `hsl(${curHue2}, 50%, 3%)`);
-      bgGrad.addColorStop(1, `hsl(${curHue}, 70%, 5%)`);
-      ctx.fillStyle = bgGrad;
+      ctx.fillStyle = '#000000';
       ctx.fillRect(0, 0, w, h);
 
       const scrollOffset = sp * h * 2.5;
 
-      // Volumetric space fog
-      const fogGrad = ctx.createLinearGradient(0, 0, w, h);
-      fogGrad.addColorStop(0, `hsla(${curHue + 10}, 50%, 15%, 0.06)`);
-      fogGrad.addColorStop(0.5, `hsla(${curHue2 - 20}, 40%, 12%, 0.03)`);
-      fogGrad.addColorStop(1, `hsla(${curHue + 30}, 50%, 18%, 0.05)`);
-      ctx.fillStyle = fogGrad;
-      ctx.fillRect(0, 0, w, h);
+      if (saturnRef.current) saturnRef.current.style.transform = `translateY(${-scrollOffset * 0.55}px)`;
+      if (neptuneRef.current) neptuneRef.current.style.transform = `translateY(${-scrollOffset * 0.62}px)`;
+      if (marsRef.current) marsRef.current.style.transform = `translateY(${-scrollOffset * 0.52}px)`;
 
       // Extremely distant galaxies
       for (const dg of distantGalaxies) {
@@ -681,32 +1272,13 @@ export default function UniverseBackground({
         ctx.restore();
       }
 
-      // Rich multi-lobe nebulae — Orion, Eagle, Carina, Pillars inspired
-      for (const rn of richNebulae) {
-        const ny = ((rn.y - scrollOffset * rn.parallax) % (h * 3) + h * 3) % (h * 3) - h;
-        const nx = rn.x + Math.sin(t * 0.15 + rn.x * 0.01) * 15;
-        for (const lobe of rn.lobes) {
-          const lx = nx + lobe.dx;
-          const ly = ny + lobe.dy;
-          const grad = ctx.createRadialGradient(lx, ly, 0, lx, ly, lobe.r);
-          grad.addColorStop(0, `hsla(${lobe.hue}, 70%, 50%, 0.08)`);
-          grad.addColorStop(0.3, `hsla(${lobe.hue}, 60%, 40%, 0.04)`);
-          grad.addColorStop(0.6, `hsla(${lobe.hue2}, 55%, 35%, 0.02)`);
-          grad.addColorStop(1, 'transparent');
-          ctx.fillStyle = grad;
-          ctx.beginPath();
-          ctx.arc(lx, ly, lobe.r, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-
-      // Nebula clouds — original drifting nebulae
-      for (const n of nebulae) {
-        const ny = ((n.y - scrollOffset * (0.3 + n.drift * 0.1)) % (h * 3) + h * 3) % (h * 3) - h;
-        const nx = n.x + Math.sin(t * 0.2 + n.x) * 30;
+      // Subtle nebula clouds — blue and purple, extremely low opacity
+      for (const n of subtleNebulae) {
+        const ny = ((n.y - scrollOffset * n.parallax) % (h * 3) + h * 3) % (h * 3) - h;
+        const nx = n.x + Math.sin(t * 0.08 + n.x * 0.01) * 20;
         const grad = ctx.createRadialGradient(nx, ny, 0, nx, ny, n.r);
-        grad.addColorStop(0, `hsla(${n.hue + curHue * 0.1}, 70%, 50%, 0.09)`);
-        grad.addColorStop(0.4, `hsla(${n.hue2}, 60%, 40%, 0.04)`);
+        grad.addColorStop(0, `hsla(${n.hue}, 60%, 25%, 0.025)`);
+        grad.addColorStop(0.5, `hsla(${n.hue2}, 50%, 20%, 0.015)`);
         grad.addColorStop(1, 'transparent');
         ctx.fillStyle = grad;
         ctx.beginPath();
@@ -788,95 +1360,6 @@ export default function UniverseBackground({
           ctx.beginPath();
           ctx.arc(px, py, st.r, 0, Math.PI * 2);
           ctx.fillStyle = `hsla(${cl.hue + st.hueOff}, 70%, 85%, ${st.a})`;
-          ctx.fill();
-        }
-      }
-
-      // Planets
-      for (const p of planets) {
-        const ny = ((p.y - scrollOffset * p.parallax) % (h * 3) + h * 3) % (h * 3) - h;
-        const nx = p.x;
-
-        const pg = ctx.createRadialGradient(
-          nx - p.r * 0.3, ny - p.r * 0.3, 0,
-          nx, ny, p.r
-        );
-        if (p.type === 'ringed') {
-          pg.addColorStop(0, `hsla(${p.hue}, 40%, 55%, 0.5)`);
-          pg.addColorStop(0.6, `hsla(${p.hue}, 35%, 30%, 0.4)`);
-          pg.addColorStop(1, `hsla(${p.hue}, 30%, 12%, 0.3)`);
-        } else if (p.type === 'rocky') {
-          pg.addColorStop(0, `hsla(${p.hue}, 50%, 45%, 0.45)`);
-          pg.addColorStop(0.6, `hsla(${p.hue}, 45%, 28%, 0.35)`);
-          pg.addColorStop(1, `hsla(${p.hue}, 40%, 10%, 0.25)`);
-        } else if (p.type === 'ice') {
-          pg.addColorStop(0, `hsla(${p.hue}, 60%, 60%, 0.4)`);
-          pg.addColorStop(0.6, `hsla(${p.hue}, 55%, 35%, 0.3)`);
-          pg.addColorStop(1, `hsla(${p.hue}, 50%, 15%, 0.2)`);
-        } else if (p.type === 'gasGiant') {
-          pg.addColorStop(0, `hsla(${p.hue}, 45%, 55%, 0.45)`);
-          pg.addColorStop(0.4, `hsla(${p.hue + 10}, 40%, 42%, 0.4)`);
-          pg.addColorStop(0.7, `hsla(${p.hue - 5}, 38%, 30%, 0.35)`);
-          pg.addColorStop(1, `hsla(${p.hue}, 35%, 15%, 0.25)`);
-        } else if (p.type === 'dwarf') {
-          pg.addColorStop(0, `hsla(${p.hue}, 30%, 45%, 0.35)`);
-          pg.addColorStop(0.7, `hsla(${p.hue}, 25%, 25%, 0.25)`);
-          pg.addColorStop(1, `hsla(${p.hue}, 20%, 10%, 0.15)`);
-        } else {
-          pg.addColorStop(0, `hsla(${p.hue}, 20%, 55%, 0.35)`);
-          pg.addColorStop(1, `hsla(${p.hue}, 15%, 25%, 0.2)`);
-        }
-        ctx.fillStyle = pg;
-        ctx.beginPath();
-        ctx.arc(nx, ny, p.r, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Gas giant bands
-        if (p.type === 'gasGiant') {
-          ctx.save();
-          ctx.beginPath();
-          ctx.arc(nx, ny, p.r, 0, Math.PI * 2);
-          ctx.clip();
-          for (let b = -3; b <= 3; b++) {
-            const by = ny + b * p.r * 0.25;
-            ctx.strokeStyle = `hsla(${p.hue + b * 5}, 35%, 38%, 0.12)`;
-            ctx.lineWidth = p.r * 0.12;
-            ctx.beginPath();
-            ctx.moveTo(nx - p.r, by);
-            ctx.lineTo(nx + p.r, by);
-            ctx.stroke();
-          }
-          ctx.restore();
-        }
-
-        // Rings
-        if (p.type === 'ringed') {
-          ctx.save();
-          ctx.translate(nx, ny);
-          ctx.rotate(p.ringTilt);
-          ctx.scale(1, 0.25);
-          ctx.strokeStyle = `hsla(${p.hue + 10}, 40%, 60%, 0.25)`;
-          ctx.lineWidth = 3;
-          ctx.beginPath();
-          ctx.arc(0, 0, p.r * 1.6, 0, Math.PI * 2);
-          ctx.stroke();
-          ctx.strokeStyle = `hsla(${p.hue + 5}, 35%, 50%, 0.15)`;
-          ctx.lineWidth = 6;
-          ctx.beginPath();
-          ctx.arc(0, 0, p.r * 1.85, 0, Math.PI * 2);
-          ctx.stroke();
-          ctx.restore();
-        }
-
-        // Atmosphere glow for ice planets
-        if (p.type === 'ice') {
-          const ag = ctx.createRadialGradient(nx, ny, p.r * 0.9, nx, ny, p.r * 1.15);
-          ag.addColorStop(0, 'transparent');
-          ag.addColorStop(0.5, `hsla(${p.hue}, 70%, 60%, 0.06)`);
-          ag.addColorStop(1, 'transparent');
-          ctx.fillStyle = ag;
-          ctx.beginPath();
-          ctx.arc(nx, ny, p.r * 1.15, 0, Math.PI * 2);
           ctx.fill();
         }
       }
@@ -1174,10 +1657,20 @@ export default function UniverseBackground({
   }, [scrollProgress]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 w-full h-full pointer-events-none"
-      style={{ zIndex: 0 }}
-    />
+    <div className="fixed inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full"
+      />
+      <div ref={saturnRef} style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 1 }}>
+        <SaturnPlanet />
+      </div>
+      <div ref={neptuneRef} style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 1 }}>
+        <NeptunePlanet />
+      </div>
+      <div ref={marsRef} style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 1 }}>
+        <MarsPlanet />
+      </div>
+    </div>
   );
 }
