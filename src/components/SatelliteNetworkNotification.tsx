@@ -17,7 +17,7 @@ export default function SatelliteNetworkNotification({
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
+    <div className="fixed inset-0 z-50 flex items-end justify-end p-6 pointer-events-none">
       <div
         className="relative"
         style={{ animation: 'hud-notification 6.5s cubic-bezier(0.22, 1, 0.36, 1) forwards' }}

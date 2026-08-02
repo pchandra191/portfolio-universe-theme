@@ -514,7 +514,7 @@ export default function UniverseBackground({
 
       // Unique orbital parameters per satellite
       const orbitRadius = 80 + Math.random() * 140;
-      const orbitSpeed = 0.0003 + Math.random() * 0.0005;
+      const orbitSpeed = 0.0001 + Math.random() * 0.0002;
 
       satellites.push({
         x: sx,
