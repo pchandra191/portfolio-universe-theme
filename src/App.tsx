@@ -35,8 +35,8 @@ function App() {
         onNetworkComplete={handleNetworkComplete}
       />
       <StarCursor />
+      <HudNav activeSection={activeSection} scrollPct={scrollPct} />
       <div className="zoom-content">
-        <HudNav activeSection={activeSection} scrollPct={scrollPct} />
         <SatelliteNetworkNotification
           show={showNetworkComplete}
           onComplete={handleNetworkDismiss}

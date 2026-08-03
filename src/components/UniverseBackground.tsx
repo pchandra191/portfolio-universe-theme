@@ -933,7 +933,7 @@ export default memo(function UniverseBackground({
     ctx.scale(dpr, dpr);
 
     const isMobile = w < 768;
-    const STAR_COUNT = isMobile ? 300 : Math.min(700, Math.floor((w * h) / 2200));
+    const STAR_COUNT = isMobile ? 120 : Math.min(280, Math.floor((w * h) / 5000));
     const stars: Star[] = [];
     for (let i = 0; i < STAR_COUNT; i++) {
       const z = Math.random();

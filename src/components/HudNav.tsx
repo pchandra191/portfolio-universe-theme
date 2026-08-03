@@ -61,21 +61,59 @@ const HudNav = memo(function HudNav({
 
   return (
     <>
-      {/* Top HUD bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-3">
-        <div className="glass rounded-full px-4 sm:px-6 py-2.5 flex items-center justify-between gap-4">
+      {/* Mobile top nav */}
+      <nav className="lg:hidden fixed top-0 left-0 right-0 z-50 px-4 pt-[env(safe-area-inset-top)] pb-3">
+        <div className="glass rounded-full px-3 py-2 flex items-center justify-between gap-2 overflow-hidden">
+          <div className="flex items-center gap-1.5 shrink-0">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" style={{ animation: 'blink 2s ease-in-out infinite' }} />
+            <span className="font-mono text-[0.5rem] tracking-[0.15em] text-emerald-300/90">ACTIVE</span>
+          </div>
+          <div className="flex items-center gap-1.5 shrink-0">
+            <div className="w-12 h-1 rounded-full bg-white/10 overflow-hidden shrink-0">
+              <div
+                className="h-full rounded-full origin-left"
+                style={{
+                  transform: `scaleX(${scrollPct / 100})`,
+                  background: 'linear-gradient(90deg, #6ad0ff, #b07cff)',
+                  boxShadow: '0 0 6px rgba(106,208,255,0.5)',
+                }}
+              />
+            </div>
+            <span className="font-mono text-[0.5rem] tabular-nums text-white/60 w-7 text-right shrink-0 inline-block overflow-hidden">
+              {scrollPct.toFixed(0)}%
+            </span>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile bottom nav */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 px-4 pb-[env(safe-area-inset-bottom)] pt-3">
+        <div className="glass rounded-full px-3 py-2 flex items-center justify-between gap-1 overflow-x-auto">
+          {NAV_ITEMS.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollTo(item.id)}
+                className="shrink-0 px-2.5 py-1 font-mono text-[0.55rem] tracking-[0.15em] transition-colors"
+                style={{ color: activeSection === item.id ? '#6ad0ff' : 'rgba(255,255,255,0.35)' }}
+              >
+                {item.idx}
+              </button>
+          ))}
+        </div>
+      </nav>
+
+      {/* Desktop top nav */}
+      <nav className="hidden lg:block fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-3" style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}>
+        <div className="glass rounded-full px-4 sm:px-6 py-2.5 flex items-center gap-4 overflow-hidden" style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}>
           {/* Left: status */}
-          <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+          <div className="flex items-center gap-3 sm:gap-4 shrink-0 min-w-0">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400" style={{ animation: 'blink 2s ease-in-out infinite' }} />
-              <span className="font-mono text-[0.6rem] sm:text-[0.65rem] tracking-[0.2em] text-emerald-300/90 hidden sm:inline">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" style={{ animation: 'blink 2s ease-in-out infinite' }} />
+              <span className="font-mono text-[0.6rem] sm:text-[0.65rem] tracking-[0.2em] text-emerald-300/90 truncate">
                 SYSTEM ACTIVE
               </span>
-              <span className="font-mono text-[0.6rem] tracking-[0.2em] text-emerald-300/90 sm:hidden">
-                ACTIVE
-              </span>
             </div>
-            <div className="hidden md:flex items-center gap-2 pl-4 border-l border-white/10">
+            <div className="hidden xl:flex items-center gap-2 pl-4 border-l border-white/10 shrink-0">
               <span className="font-mono text-[0.6rem] tracking-[0.15em] text-white/40">XY</span>
               <span className="font-mono text-[0.6rem] tracking-[0.1em] text-cyan-300/80 tabular-nums">
                 {coords.x.toString().padStart(3, '0')}° · {coords.y.toString().padStart(3, '0')}°
@@ -84,70 +122,56 @@ const HudNav = memo(function HudNav({
           </div>
 
           {/* Center: nav items */}
-          <div className="hidden lg:flex items-center gap-1">
-            {NAV_ITEMS.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollTo(item.id)}
-                className="group relative px-3 py-1.5 font-mono text-[0.62rem] tracking-[0.18em] transition-all duration-300"
-                style={{
-                  color: activeSection === item.id ? '#6ad0ff' : 'rgba(255,255,255,0.4)',
-                }}
-              >
-                <span className="opacity-50 mr-1.5">{item.idx}</span>
-                {item.label}
-                {activeSection === item.id && (
-                  <span
-                    className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 h-px bg-cyan-400 transition-all duration-500"
-                    style={{ width: '70%', boxShadow: '0 0 8px #6ad0ff' }}
-                  />
-                )}
-              </button>
-            ))}
+          <div className="flex-1 flex justify-center min-w-0">
+            <div className="flex items-center gap-1">
+              {NAV_ITEMS.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollTo(item.id)}
+                  className="group relative px-3 py-1.5 font-mono text-[0.62rem] tracking-[0.18em] transition-colors whitespace-nowrap"
+                  style={{
+                    color: activeSection === item.id ? '#6ad0ff' : 'rgba(255,255,255,0.4)',
+                  }}
+                >
+                  <span className="opacity-50 mr-1.5">{item.idx}</span>
+                  {item.label}
+                  {activeSection === item.id && (
+                    <span
+                      className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 h-px bg-cyan-400"
+                      style={{ width: '70%', boxShadow: '0 0 8px #6ad0ff' }}
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Right: progress + region */}
-          <div className="flex items-center gap-3 sm:gap-4 shrink-0">
-            <div className="hidden sm:flex flex-col items-end">
-              <span className="font-mono text-[0.55rem] tracking-[0.15em] text-white/40 leading-none mb-1">
+          <div className="flex items-center gap-3 sm:gap-4 shrink-0 min-w-0">
+            <div className="hidden sm:flex flex-col items-end min-w-0 w-28">
+              <span className="font-mono text-[0.55rem] tracking-[0.15em] text-white/40 leading-none mb-1 truncate">
                 REGION
               </span>
-              <span className="font-mono text-[0.6rem] tracking-[0.12em] text-cyan-300/80 leading-none">
+              <span className="font-mono text-[0.6rem] tracking-[0.12em] text-cyan-300/80 leading-none truncate">
                 {REGIONS[regionIdx]}
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-16 sm:w-24 h-1 rounded-full bg-white/10 overflow-hidden">
+            <div className="flex items-center gap-2 shrink-0">
+              <div className="w-16 sm:w-24 h-1 rounded-full bg-white/10 overflow-hidden shrink-0">
                 <div
-                  className="h-full rounded-full transition-all duration-150"
+                  className="h-full rounded-full origin-left"
                   style={{
-                    width: `${scrollPct}%`,
+                    transform: `scaleX(${scrollPct / 100})`,
                     background: 'linear-gradient(90deg, #6ad0ff, #b07cff)',
                     boxShadow: '0 0 8px rgba(106,208,255,0.6)',
                   }}
                 />
               </div>
-              <span className="font-mono text-[0.6rem] tabular-nums text-white/60 w-8 text-right">
+              <span className="font-mono text-[0.6rem] tabular-nums text-white/60 w-10 text-right shrink-0 inline-block overflow-hidden">
                 {scrollPct.toFixed(0)}%
               </span>
             </div>
           </div>
-        </div>
-      </nav>
-
-      {/* Mobile bottom nav */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 px-4 pb-3">
-        <div className="glass rounded-full px-3 py-2 flex items-center justify-between gap-1 overflow-x-auto">
-          {NAV_ITEMS.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => scrollTo(item.id)}
-              className="shrink-0 px-2.5 py-1 font-mono text-[0.55rem] tracking-[0.15em] transition-colors"
-              style={{ color: activeSection === item.id ? '#6ad0ff' : 'rgba(255,255,255,0.35)' }}
-            >
-              {item.idx}
-            </button>
-          ))}
         </div>
       </nav>
 
