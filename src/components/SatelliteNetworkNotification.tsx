@@ -88,14 +88,14 @@ export default function SatelliteNetworkNotification({
 
             {/* Title */}
             <h3 className="font-display text-lg font-bold tracking-wider text-white mb-5">
-              SATELLITE NETWORK COMPLETE
+              SATELLITE MISSION COMPLETED
             </h3>
 
             {/* Progress bar */}
             <div className="mb-5">
               <div className="flex items-center justify-between font-mono text-[0.6rem] tracking-[0.15em] text-white/60 mb-2">
                 <span>DEPLOYMENT STATUS</span>
-                <span className="text-cyan-300">20 / 20</span>
+                <span className="text-cyan-300">5 / 5</span>
               </div>
               <div className="h-1 rounded-full bg-white/5 overflow-hidden">
                 <div

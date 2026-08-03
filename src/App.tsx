@@ -29,42 +29,44 @@ function App() {
   const handleNetworkDismiss = useMemo(() => () => setShowNetworkComplete(false), []);
 
   return (
-    <div className="relative min-h-screen w-full overflow-x-hidden">
+    <>
       <UniverseBackground
         scrollProgress={scrollProgress}
         onNetworkComplete={handleNetworkComplete}
       />
       <StarCursor />
-      <HudNav activeSection={activeSection} scrollPct={scrollPct} />
-      <SatelliteNetworkNotification
-        show={showNetworkComplete}
-        onComplete={handleNetworkDismiss}
-      />
+      <div className="zoom-content" style={{ zoom: '1.25' }}>
+        <HudNav activeSection={activeSection} scrollPct={scrollPct} />
+        <SatelliteNetworkNotification
+          show={showNetworkComplete}
+          onComplete={handleNetworkDismiss}
+        />
 
-      <div className="relative z-10">
-        <Suspense fallback={<SectionFallback />}>
-          <Hero />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <MissionProfile />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <CoreEngine />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <MissionLogs />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <ProjectArchive />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <CosmicExperiments />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <FinalTransmission />
-        </Suspense>
+        <div className="relative z-10">
+          <Suspense fallback={<SectionFallback />}>
+            <Hero />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <MissionProfile />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <CoreEngine />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <MissionLogs />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <ProjectArchive />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <CosmicExperiments />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <FinalTransmission />
+          </Suspense>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

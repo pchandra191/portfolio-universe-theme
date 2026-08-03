@@ -1111,9 +1111,9 @@ export default memo(function UniverseBackground({
     let lastShooter = 0;
     let t = 0;
 
-    // Interactive satellites — up to 20, each with independent orbit
+    // Interactive satellites — up to 5, each with independent orbit
     const satellites: Satellite[] = [];
-    const MAX_SATELLITES = 20;
+    const MAX_SATELLITES = 5;
     let networkCompleteFired = false;
 
     const launchSatellite = (sx: number, sy: number) => {

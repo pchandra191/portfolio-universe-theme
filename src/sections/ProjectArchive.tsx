@@ -1,35 +1,37 @@
 import { useInView } from '@/hooks/useScroll';
 import { memo } from 'react';
-import { ExternalLink, FileText, Github } from 'lucide-react';
+import { ExternalLink, FileText } from 'lucide-react';
 
 const PROJECTS = [
   {
-    name: 'Wellness Platform',
-    tag: 'FULL STACK · SaaS',
-    desc: 'AI-powered wellness ecosystem with real-time activity tracking, personalized recommendations, and multi-tenant architecture.',
-    stack: ['Symfony', 'React', 'AWS', 'MySQL'],
-    metrics: { users: '10K+', uptime: '99.9%', scale: 'Multi-tenant' },
+    name: 'EduPulse AI',
+    tag: 'AI · EDUCATION SaaS · B2B and B2C',
+    desc: 'Adaptive learning platform powered by AI. Generates personalized study paths and real-time performance analytics.',
+    stack: ['Agentic AI', 'React', 'Symfony', 'PostgreSQL'],
+    metrics: { Status: 'Under development', scale: 'Multi-tenant' },
+    url: 'https://syntaxbase.online/edupulseai',
+    logo: '/logos/edupulse-ai.webp'
+
   },
   {
-    name: 'Expedition Booking',
-    tag: 'WEB APP · BOOKING',
-    desc: 'Multi-language expedition review and booking platform with integrated payments and custom CMS.',
-    stack: ['Laravel', 'JavaScript', 'MySQL'],
-    metrics: { langs: '5', bookings: '2K+', rating: '4.8★' },
+    name: 'TruFin',
+    tag: 'FINANCE SaaS · B2B',
+    desc: 'AI-driven financial analytics platform for SMEs. Provides predictive insights, risk assessment, and automated reporting.',
+    stack: ['React', 'MongoDB', 'Express.js'],
+    metrics: { Status: 'Under development', scale: 'Multi-tenant' },
+    url: 'https://truefin.tech',
+    logo: '/logos/trufin.webp'
+
   },
   {
-    name: 'CRM Suite',
-    tag: 'ENTERPRISE · CRM',
-    desc: 'Comprehensive CRM with workflow automation, role-based access, and REST API integrations.',
-    stack: ['PHP', 'Node.js', 'MongoDB'],
-    metrics: { workflows: '50+', apis: '20+', teams: '100+' },
-  },
-  {
-    name: 'Retail Manager',
-    tag: 'FULL STACK · RETAIL',
-    desc: 'Multi-store retail management system with inventory tracking, sales analytics, and real-time sync.',
-    stack: ['Laravel', 'React', 'Docker', 'AWS'],
-    metrics: { stores: '50+', items: '100K', sync: 'Real-time' },
+    name: 'SyntaxBase',
+    tag: 'AI · PROGRAMMING EDUCATION · COMMUNITY PLATFORM · B2C',
+    desc: 'Code snippet management and API documentation hub with collaborative editing and version control.',
+    stack: ['OpenAI', 'React', 'Symfony', 'MySQL'],
+    metrics: { users: '200+', Status: 'Active', scale: '2K+', rating: '4.8★' },
+    url: 'https://syntaxbase.online',
+    logo: '/logos/syntaxbase.webp'
+
   },
 ];
 
@@ -42,10 +44,10 @@ const ProjectArchive = memo(function ProjectArchive() {
         {/* Header */}
         <div className="mb-16 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
-            <span className="section-label block mb-3">/ 04 — PROJECT ARCHIVE</span>
+            <span className="section-label block mb-3">/ 04 — COSMIC EXPANSION</span>
             <h2 className="font-display text-4xl sm:text-6xl font-bold leading-tight">
               <span className="bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent">
-                DEPLOYED
+                OWNED
               </span>{' '}
               <span className="bg-gradient-to-r from-cyan-300 to-indigo-400 bg-clip-text text-transparent">
                 SYSTEMS
@@ -53,7 +55,7 @@ const ProjectArchive = memo(function ProjectArchive() {
             </h2>
           </div>
           <p className="font-mono text-[0.65rem] tracking-[0.15em] text-white/40 max-w-xs leading-relaxed">
-            Production-grade systems. Each one launched, scaled, and maintained in orbit.
+            Lost in the Cosmos. Each one is built, scaled, and maintained in orbit.
           </p>
         </div>
 
@@ -77,11 +79,23 @@ const ProjectArchive = memo(function ProjectArchive() {
                 }}
               />
 
-              {/* Tag + index */}
+              {/* Header */}
               <div className="flex items-center justify-between mb-5">
-                <span className="font-mono text-[0.5rem] tracking-[0.2em] text-cyan-300/60 px-2.5 py-1 rounded-full border border-cyan-300/20">
-                  {p.tag}
-                </span>
+                <div className="flex items-center gap-3">
+                  <div
+                    className="flex items-center justify-center shrink-0 overflow-hidden"
+                  >
+                    <img
+                      src={p.logo}
+                      alt={p.name}
+                      className="w-12 h-12 object-contain"
+                      loading="lazy"
+                    />
+                  </div>
+                  <span className="font-mono text-[0.5rem] tracking-[0.2em] text-cyan-300/60 px-2.5 py-1 rounded-full border border-cyan-300/20">
+                    {p.tag}
+                  </span>
+                </div>
                 <span className="font-mono text-[0.5rem] tracking-[0.15em] text-white/25">
                   {String(i + 1).padStart(3, '0')}
                 </span>
@@ -126,17 +140,13 @@ const ProjectArchive = memo(function ProjectArchive() {
 
               {/* Actions */}
               <div className="flex flex-wrap gap-2">
-                <button className="btn-hud text-[0.55rem] py-2 px-3">
+                <button className="btn-hud text-[0.55rem] py-2 px-3" onClick={() => window.open(p.url, '_blank')}>
                   <ExternalLink size={11} />
                   Launch
                 </button>
                 <button className="btn-hud text-[0.55rem] py-2 px-3">
                   <FileText size={11} />
                   Details
-                </button>
-                <button className="btn-hud text-[0.55rem] py-2 px-3">
-                  <Github size={11} />
-                  Source
                 </button>
               </div>
             </div>

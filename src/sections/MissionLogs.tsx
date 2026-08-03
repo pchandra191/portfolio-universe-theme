@@ -4,38 +4,47 @@ import { memo } from 'react';
 const MISSIONS = [
   {
     company: 'Sani Aktiv',
-    role: 'Full Stack Developer',
-    period: '2023 — PRESENT',
-    status: 'ACTIVE',
-    coords: 'SECTOR 7-G',
-    desc: 'Architected and deployed full-stack wellness platforms with Symfony + React. Built AI-assisted recommendation engines and real-time activity tracking systems.',
+    role: 'CORE PHP',
+    period: 'Apr 2025 — Dec 2025',
+    status: 'COMPLETED',
+    coords: 'GIFT CITY, GJ',
+    desc: 'Developing a comprehensive ERP system for Sani Aktiv, focusing on inventory management, sales tracking, and customer relationship management. Implementing real-time data analytics with Google Analytics & Tag Manager for insights and reporting features.',
     stack: ['Symfony', 'React', 'AWS', 'MySQL'],
   },
   {
     company: 'Expedreview',
-    role: 'Software Engineer',
-    period: '2022 — 2023',
+    role: 'Backend Engineer',
+    period: 'Nov 2024 — Jan 2025',
     status: 'COMPLETED',
-    coords: 'SECTOR 4-B',
-    desc: 'Developed expedition review and booking platform. Implemented multi-language support, payment integration, and a custom content management system.',
+    coords: 'AHMEDABAD, GJ',
+    desc: 'Built RESTful APIs for a review and booking platform for adventure expeditions. Implemented Service Listing integration, Payment integration, and a custom content management system.',
+    stack: ['Laravel', 'JavaScript', 'MySQL'],
+  },
+  {
+    company: 'Minute',
+    role: 'FULL STACK ENGINEER',
+    period: 'Oct 2023 — Nov 2024',
+    status: 'COMPLETED',
+    coords: 'AHMEDABAD, GJ',
+    desc: 'Developed a full-stack web application for a time management and productivity tool. Implemented user authentication, task scheduling, real-time notifications and Stripe payment integration. Integrated third-party APIs for Google Places API and analytics.',
     stack: ['Laravel', 'JavaScript', 'MySQL'],
   },
   {
     company: 'VSUIT CRM',
     role: 'Backend Developer',
-    period: '2021 — 2022',
+    period: 'Aug 2022 — Sept 2023',
     status: 'COMPLETED',
-    coords: 'SECTOR 2-A',
-    desc: 'Built a comprehensive CRM suite with custom workflow automation, role-based access control, and REST API integrations for third-party services.',
+    coords: 'GURGAON, HR',
+    desc: 'Worked on a comprehensive CRM suite for Text-to-speech conversion, SMS/Whatsapp, Landing pages and email analytics integration with custom workflow automation, role-based access control, and REST API integrations for third-party services.',
     stack: ['PHP', 'Node.js', 'MongoDB'],
   },
   {
     company: 'Retail Blitz Service',
     role: 'Full Stack Developer',
-    period: '2020 — 2021',
+    period: 'Mar 2020 — Aug 2022',
     status: 'COMPLETED',
-    coords: 'SECTOR 1-D',
-    desc: 'Created retail management system with inventory tracking, sales analytics dashboards, and multi-store synchronization. Deployed on AWS with Docker.',
+    coords: 'REMOTE, MILKY WAY',
+    desc: 'Created retail management system with inventory tracking, sales analytics dashboards, and multi-store synchronization. Deployed on AWS.',
     stack: ['Laravel', 'React', 'Docker', 'AWS'],
   },
 ];
@@ -48,7 +57,7 @@ const MissionLogs = memo(function MissionLogs() {
       <div ref={ref} className="max-w-5xl mx-auto w-full">
         {/* Header */}
         <div className="mb-16">
-          <span className="section-label block mb-3">/ 03 — MISSION LOGS</span>
+          <span className="section-label block mb-3">/ 03 — Redshift JOURNEY</span>
           <h2 className="font-display text-4xl sm:text-6xl font-bold leading-tight mb-4">
             <span className="bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent">
               CAREER
@@ -58,7 +67,7 @@ const MissionLogs = memo(function MissionLogs() {
             </span>
           </h2>
           <p className="font-mono text-[0.65rem] tracking-[0.15em] text-white/40 max-w-lg leading-relaxed">
-            A chronological record of deployments. Each mission represents a system built, scaled, and delivered.
+            A timeline through the cosmos of my professional experience, highlighting key missions and contributions across various projects in organization.
           </p>
         </div>
 
@@ -68,7 +77,7 @@ const MissionLogs = memo(function MissionLogs() {
           <div
             className="absolute left-4 sm:left-1/2 top-0 bottom-0 w-px -translate-x-1/2"
             style={{
-              background: 'linear-gradient(to bottom, transparent, rgba(106,208,255,0.3) 10%, rgba(106,208,255,0.3) 90%, transparent)',
+              background: 'linear-gradient(to bottom, transparent, rgba(255, 106, 106, 0.37) 10%, rgba(255, 106, 118, 0.95) 90%, transparent)',
             }}
           />
 

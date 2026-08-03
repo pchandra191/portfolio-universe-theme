@@ -25,6 +25,11 @@ const Hero = memo(function Hero() {
         return () => clearTimeout(t);
       } else {
         setDone(true);
+        const t = setTimeout(() => {
+          setLineIdx(0);
+          setTyped('');
+        }, 3000);
+        return () => clearTimeout(t);
       }
     }
   }, [typed, lineIdx]);
@@ -36,7 +41,7 @@ const Hero = memo(function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 pt-20"
+      className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6"
     >
       {/* Mission badge */}
       <div className="glass rounded-full px-4 py-1.5 mb-8 flex items-center gap-2.5 reveal in-view">
@@ -104,20 +109,31 @@ const Hero = memo(function Hero() {
       </div>
 
       {/* Corner HUD decorations */}
-      <div className="absolute top-24 left-4 sm:left-6 hidden md:block">
-        <div className="font-mono text-[0.55rem] tracking-[0.2em] text-white/30 leading-relaxed">
-          <div>SECTOR · 00</div>
-          <div>VELOCITY · 0.00c</div>
-          <div>STATUS · NOMINAL</div>
-        </div>
-      </div>
+
       <div className="absolute top-24 right-4 sm:right-6 hidden md:block text-right">
         <div className="font-mono text-[0.55rem] tracking-[0.2em] text-white/30 leading-relaxed">
-          <div>OBSERVABLE UNIVERSE</div>
-          <div>EST. 93B LY</div>
-          <div>AGE · 13.8B YRS</div>
+          <div>EARTH</div>
+          <div>EST. ~4.54 BILLION YRS</div>
+          <div>HUMAN · ~650,000 YRS</div>
+          <div>STATUS · WORKING</div>
         </div>
       </div>
+      <div className="absolute top-24 left-4 sm:left-6 hidden md:block">
+        <div className="font-mono text-[0.55rem] tracking-[0.2em] text-white/30 leading-relaxed">
+          <div>OBSERVABLE UNIVERSE</div>
+          <div>RADIUS · 46.5 BILLION light-years</div>
+          <div>VELOCITY · 70 km/s/Mpc</div>
+          <div>AGE · ~13.8 BILLION YRS</div>
+        </div>
+      </div>
+      {/* <div className="absolute top-24 middle right-4 sm:  right-6 hidden md:block text-right">
+        <div className="font-mono text-[0.55rem] tracking-[0.2em] text-white/30 leading-relaxed">
+          <div>CODING</div>
+          <div>EST. ~4.54 BILLION YRS</div>
+          <div>HUMAN · ~650,000 YRS</div>
+          <div>STATUS · WORKING</div>
+        </div>
+      </div> */}
     </section>
   );
 });

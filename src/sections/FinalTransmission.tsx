@@ -54,19 +54,19 @@ const FinalTransmission = memo(function FinalTransmission() {
 
             {/* Action buttons */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
-              <a href="mailto:hello@prabhat.dev" className="btn-hud flex-col h-auto py-4 gap-2">
+              <a href="mailto:pchandra114@hotmail.com" className="btn-hud flex-col h-auto py-4 gap-2">
                 <Mail size={18} />
                 <span className="text-[0.55rem]">Email</span>
               </a>
-              <a href="https://github.com/prabhat" target="_blank" rel="noopener noreferrer" className="btn-hud flex-col h-auto py-4 gap-2">
+              <a href="https://github.com/pchandra191" target="_blank" rel="noopener noreferrer" className="btn-hud flex-col h-auto py-4 gap-2">
                 <Github size={18} />
                 <span className="text-[0.55rem]">GitHub</span>
               </a>
-              <a href="https://linkedin.com/in/prabhat" target="_blank" rel="noopener noreferrer" className="btn-hud flex-col h-auto py-4 gap-2">
+              <a href="https://linkedin.com/in/prabhatchandra114" target="_blank" rel="noopener noreferrer" className="btn-hud flex-col h-auto py-4 gap-2">
                 <Linkedin size={18} />
                 <span className="text-[0.55rem]">LinkedIn</span>
               </a>
-              <a href="#" className="btn-hud flex-col h-auto py-4 gap-2">
+              <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn-hud flex-col h-auto py-4 gap-2">
                 <FileText size={18} />
                 <span className="text-[0.55rem]">Resume</span>
               </a>

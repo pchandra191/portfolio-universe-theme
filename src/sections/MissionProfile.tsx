@@ -4,8 +4,8 @@ import { Briefcase, Code2, Target, MapPin, Layers, Cpu } from 'lucide-react';
 
 const STATS = [
   { icon: Briefcase, label: 'YEARS EXPERIENCE', value: '5+', sub: 'IN PRODUCTION' },
-  { icon: Code2, label: 'PROJECTS DELIVERED', value: '40+', sub: 'FULL STACK' },
-  { icon: Layers, label: 'TECHNOLOGIES', value: '13+', sub: 'CORE STACK' },
+  { icon: Code2, label: 'PROJECTS DELIVERED', value: '9+', sub: 'FULL STACK' },
+  { icon: Layers, label: 'TECHNOLOGIES', value: '18+', sub: 'CORE STACK' },
   { icon: Target, label: 'CURRENT FOCUS', value: 'AI', sub: 'FULL STACK SYSTEMS' },
 ];
 
@@ -18,7 +18,7 @@ const MissionProfile = memo(() => {
         {/* Section header */}
         <div className="mb-16 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
-            <span className="section-label block mb-3">/ 01 — MISSION PROFILE</span>
+            <span className="section-label block mb-3">/ 01 — Event Horizon</span>
             <h2 className="font-display text-4xl sm:text-6xl font-bold leading-tight text-balance">
               <span className="bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent">
                 OPERATOR
@@ -78,7 +78,7 @@ const MissionProfile = memo(() => {
                 Base of Operations
               </div>
               <div className="font-display text-lg sm:text-xl text-white/90">
-                Remote · Earth Orbit
+                India · Earth
               </div>
             </div>
           </div>
@@ -87,10 +87,10 @@ const MissionProfile = memo(() => {
             <Cpu size={20} className="text-cyan-300/70 shrink-0" />
             <div>
               <div className="font-mono text-[0.55rem] tracking-[0.2em] text-white/40 uppercase mb-1">
-                Active Systems
+                As Human
               </div>
               <div className="font-display text-lg sm:text-xl text-white/90">
-                Symfony · React · AWS
+                Male(he/Him) · English/Hindi · 1996
               </div>
             </div>
           </div>

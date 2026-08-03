@@ -183,8 +183,8 @@
   }
 }
 
-.orbit-container {
-  --orbit-scale: 1;
+.zoom-content section {
+  min-height: 80vh;
 }
 
 @keyframes twinkle {
@@ -211,6 +211,15 @@
 @keyframes pulse-glow {
   0%, 100% { opacity: 0.5; transform: scale(1); }
   50% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes orbit-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+@keyframes dash-flow {
+  to { stroke-dashoffset: -20; }
 }
 
 @keyframes scan-line {
