@@ -183,6 +183,10 @@
   }
 }
 
+.orbit-container {
+  --orbit-scale: 1;
+}
+
 @keyframes twinkle {
   0%, 100% { opacity: 0.3; }
   50% { opacity: 1; }
