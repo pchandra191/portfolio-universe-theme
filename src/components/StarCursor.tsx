@@ -48,7 +48,7 @@ export default function StarCursor() {
 
     const pool: TrailDot[] = [];
     for (let i = 0; i < TRAIL_POOL_SIZE; i++) {
-      pool.push({ x: 0, y: 0, life: 999, maxLife: 1, r: 0 });
+      pool.push({ x: 0, y: 0, life: 1, maxLife: 1, r: 0 });
     }
     poolRef.current = pool;
     poolIdxRef.current = 0;
@@ -98,7 +98,7 @@ export default function StarCursor() {
           poolRef.current[idx].x = dx + (Math.random() - 0.5) * 6;
           poolRef.current[idx].y = dy + (Math.random() - 0.5) * 6;
           poolRef.current[idx].life = 0;
-          poolRef.current[idx].maxLife = 30 + Math.random() * 30;
+          poolRef.current[idx].maxLife = 30 + Math.floor(Math.random() * 30);
           poolRef.current[idx].r = 1 + Math.random() * 2;
           poolIdxRef.current = (idx + 1) % TRAIL_POOL_SIZE;
         }
@@ -107,11 +107,12 @@ export default function StarCursor() {
       ctx.clearRect(0, 0, w, h);
       for (let i = 0; i < TRAIL_POOL_SIZE; i++) {
         const p = poolRef.current[i];
-        if (p.life >= p.maxLife) continue;
+        if (p.life >= p.maxLife || p.maxLife <= 0) continue;
         p.life++;
         const a = Math.sin((p.life / p.maxLife) * Math.PI) * 0.7;
+        const radius = Math.max(0, p.r * (1 - p.life / p.maxLife));
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r * (1 - p.life / p.maxLife), 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(150, 210, 255, ${a})`;
         ctx.fill();
       }

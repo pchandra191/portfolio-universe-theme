@@ -8,6 +8,7 @@ interface Star {
   tw: number;
   twSpeed: number;
   hue: number;
+  twinkle: boolean;
 }
 
 interface Shooter {
@@ -936,14 +937,16 @@ export default memo(function UniverseBackground({
     const stars: Star[] = [];
     for (let i = 0; i < STAR_COUNT; i++) {
       const z = Math.random();
+      const twinkle = Math.random() < 0.2;
       stars.push({
         x: Math.random() * w,
         y: Math.random() * h * 3,
         z,
         r: z * 1.6 + 0.2,
         tw: Math.random() * Math.PI * 2,
-        twSpeed: 0.01 + Math.random() * 0.03,
+        twSpeed: twinkle ? 0.01 + Math.random() * 0.03 : 0,
         hue: 200 + Math.random() * 80,
+        twinkle,
       });
     }
 
@@ -1325,17 +1328,20 @@ export default memo(function UniverseBackground({
 
       // Stars with parallax depth
       for (const s of stars) {
-        s.tw += s.twSpeed;
         const parallax = 0.2 + s.z * 1.8;
         const sy = ((s.y - scrollOffset * parallax) % (h * 3) + h * 3) % (h * 3) - h;
         const sx = s.x + Math.sin(t * 0.05 + s.y * 0.001) * (s.z * 8);
         if (sx < -10 || sx > w + 10 || sy < -10 || sy > h + 10) continue;
-        const twinkle = 0.5 + Math.sin(s.tw) * 0.5;
-        const alpha = (0.3 + s.z * 0.7) * twinkle;
+        const baseAlpha = 0.3 + s.z * 0.7;
+        const twinkle = s.twinkle ? 0.85 + Math.sin(s.tw) * 0.15 : 1;
+        const alpha = baseAlpha * twinkle;
         ctx.beginPath();
         ctx.arc(sx, sy, s.r, 0, Math.PI * 2);
         ctx.fillStyle = `hsla(${s.hue}, 80%, 85%, ${alpha})`;
         ctx.fill();
+        if (s.twinkle) {
+          s.tw += s.twSpeed;
+        }
       }
 
       // Constellations
