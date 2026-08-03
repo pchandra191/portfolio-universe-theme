@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 
 interface Star {
   x: number;
@@ -888,7 +888,7 @@ function MarsPlanet() {
   );
 }
 
-export default function UniverseBackground({
+export default memo(function UniverseBackground({
   scrollProgress,
   onNetworkComplete,
 }: {
@@ -902,6 +902,19 @@ export default function UniverseBackground({
   const marsRef = useRef<HTMLDivElement>(null);
   const onNetworkCompleteRef = useRef(onNetworkComplete);
   onNetworkCompleteRef.current = onNetworkComplete;
+  const visibleRef = useRef(true);
+  const renderRef = useRef<((now: number) => void) | null>(null);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      visibleRef.current = !document.hidden;
+      if (visibleRef.current && canvasRef.current && renderRef.current) {
+        rafRef.current = requestAnimationFrame(renderRef.current);
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -909,8 +922,8 @@ export default function UniverseBackground({
     const ctx = canvas.getContext('2d', { alpha: false });
     if (!ctx) return;
 
-    let w = (canvas.width = window.innerWidth);
-    let h = (canvas.height = window.innerHeight);
+    let w = window.innerWidth;
+    let h = window.innerHeight;
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = w * dpr;
     canvas.height = h * dpr;
@@ -918,7 +931,8 @@ export default function UniverseBackground({
     canvas.style.height = h + 'px';
     ctx.scale(dpr, dpr);
 
-    const STAR_COUNT = Math.min(700, Math.floor((w * h) / 2200));
+    const isMobile = w < 768;
+    const STAR_COUNT = isMobile ? 300 : Math.min(700, Math.floor((w * h) / 2200));
     const stars: Star[] = [];
     for (let i = 0; i < STAR_COUNT; i++) {
       const z = Math.random();
@@ -955,7 +969,7 @@ export default function UniverseBackground({
 
     // Spiral + elliptical galaxies
     const galaxies: Galaxy[] = [];
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < (isMobile ? 3 : 6); i++) {
       galaxies.push({
         x: Math.random() * w,
         y: Math.random() * h * 3,
@@ -970,7 +984,7 @@ export default function UniverseBackground({
       });
     }
     // Elliptical galaxies — smooth glowing ovals
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < (isMobile ? 2 : 4); i++) {
       galaxies.push({
         x: Math.random() * w,
         y: Math.random() * h * 3,
@@ -987,7 +1001,7 @@ export default function UniverseBackground({
 
     // Extremely distant galaxies — tiny faint glows
     const distantGalaxies: { x: number; y: number; r: number; hue: number; parallax: number }[] = [];
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < (isMobile ? 5 : 12); i++) {
       distantGalaxies.push({
         x: Math.random() * w,
         y: Math.random() * h * 3,
@@ -999,7 +1013,7 @@ export default function UniverseBackground({
 
     // Star clusters — pre-compute star positions so they don't flicker
     const clusters: (Cluster & { stars: { dx: number; dy: number; r: number; hueOff: number; a: number }[] })[] = [];
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < (isMobile ? 2 : 4); i++) {
         const stars: { dx: number; dy: number; r: number; hueOff: number; a: number }[] = [];
         const count = 25 + Math.floor(Math.random() * 20);
         for (let j = 0; j < count; j++) {
@@ -1022,7 +1036,7 @@ export default function UniverseBackground({
           stars,
         });
     }
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < (isMobile ? 2 : 4); i++) {
         const stars: { dx: number; dy: number; r: number; hueOff: number; a: number }[] = [];
         const count = 60 + Math.floor(Math.random() * 40);
         for (let j = 0; j < count; j++) {
@@ -1059,7 +1073,7 @@ export default function UniverseBackground({
 
     // Asteroids
     const asteroids: Asteroid[] = [];
-    for (let i = 0; i < 14; i++) {
+    for (let i = 0; i < (isMobile ? 6 : 14); i++) {
       asteroids.push({
         x: Math.random() * w,
         y: h * (0.5 + Math.random() * 2.5),
@@ -1172,6 +1186,7 @@ export default function UniverseBackground({
     window.addEventListener('resize', handleResize);
 
     const render = (now: number) => {
+      if (!visibleRef.current) return;
       t += 0.016;
       const sp = scrollProgress.current;
       const regionIdx = Math.min(
@@ -1197,6 +1212,7 @@ export default function UniverseBackground({
       // Extremely distant galaxies
       for (const dg of distantGalaxies) {
         const ny = ((dg.y - scrollOffset * dg.parallax) % (h * 3) + h * 3) % (h * 3) - h;
+        if (ny < -dg.r || ny > h + dg.r) continue;
         const grad = ctx.createRadialGradient(dg.x, ny, 0, dg.x, ny, dg.r);
         grad.addColorStop(0, `hsla(${dg.hue}, 50%, 70%, 0.1)`);
         grad.addColorStop(0.5, `hsla(${dg.hue}, 40%, 50%, 0.03)`);
@@ -1313,6 +1329,7 @@ export default function UniverseBackground({
         const parallax = 0.2 + s.z * 1.8;
         const sy = ((s.y - scrollOffset * parallax) % (h * 3) + h * 3) % (h * 3) - h;
         const sx = s.x + Math.sin(t * 0.05 + s.y * 0.001) * (s.z * 8);
+        if (sx < -10 || sx > w + 10 || sy < -10 || sy > h + 10) continue;
         const twinkle = 0.5 + Math.sin(s.tw) * 0.5;
         const alpha = (0.3 + s.z * 0.7) * twinkle;
         ctx.beginPath();
@@ -1647,6 +1664,7 @@ export default function UniverseBackground({
 
       rafRef.current = requestAnimationFrame(render);
     };
+    renderRef.current = render;
     rafRef.current = requestAnimationFrame(render);
 
     return () => {
@@ -1673,4 +1691,4 @@ export default function UniverseBackground({
       </div>
     </div>
   );
-}
+});

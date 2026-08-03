@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, memo } from 'react';
 
 const NAV_ITEMS = [
   { id: 'hero', label: 'ORIGIN', idx: '00' },
@@ -23,7 +23,7 @@ const REGIONS = [
   'MISSION COMPLETE',
 ];
 
-export default function HudNav({
+const HudNav = memo(function HudNav({
   activeSection,
   scrollPct,
 }: {
@@ -33,14 +33,21 @@ export default function HudNav({
   const [coords, setCoords] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    let raf = 0;
     const onMove = (e: MouseEvent) => {
-      setCoords({
-        x: Math.floor((e.clientX / window.innerWidth) * 360),
-        y: Math.floor((e.clientY / window.innerHeight) * 180),
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        setCoords({
+          x: Math.floor((e.clientX / window.innerWidth) * 360),
+          y: Math.floor((e.clientY / window.innerHeight) * 180),
+        });
       });
     };
     window.addEventListener('mousemove', onMove);
-    return () => window.removeEventListener('mousemove', onMove);
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   const regionIdx = Math.min(
@@ -48,9 +55,9 @@ export default function HudNav({
     Math.floor((scrollPct / 100) * REGIONS.length)
   );
 
-  const scrollTo = (id: string) => {
+  const scrollTo = useCallback((id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, []);
 
   return (
     <>
@@ -167,4 +174,6 @@ export default function HudNav({
       </div>
     </>
   );
-}
+});
+
+export default HudNav;

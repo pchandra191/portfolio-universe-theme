@@ -1,4 +1,5 @@
 import { useInView } from '@/hooks/useScroll';
+import { memo } from 'react';
 
 const MISSIONS = [
   {
@@ -39,7 +40,7 @@ const MISSIONS = [
   },
 ];
 
-export default function MissionLogs() {
+const MissionLogs = memo(function MissionLogs() {
   const { ref, inView } = useInView<HTMLDivElement>(0.1);
 
   return (
@@ -162,4 +163,6 @@ export default function MissionLogs() {
       </div>
     </section>
   );
-}
+});
+
+export default MissionLogs;
