@@ -1,4 +1,5 @@
 import { useInView } from '@/hooks/useScroll';
+import { memo } from 'react';
 import { ExternalLink, FileText, Github } from 'lucide-react';
 
 const PROJECTS = [
@@ -32,7 +33,7 @@ const PROJECTS = [
   },
 ];
 
-export default function ProjectArchive() {
+const ProjectArchive = memo(function ProjectArchive() {
   const { ref, inView } = useInView<HTMLDivElement>(0.1);
 
   return (
@@ -144,4 +145,6 @@ export default function ProjectArchive() {
       </div>
     </section>
   );
-}
+});
+
+export default ProjectArchive;

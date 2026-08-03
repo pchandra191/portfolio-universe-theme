@@ -8,11 +8,15 @@ interface TrailDot {
   r: number;
 }
 
+const TRAIL_POOL_SIZE = 120;
+
 export default function StarCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rafRef = useRef<number>(0);
+  const poolRef = useRef<TrailDot[]>([]);
+  const poolIdxRef = useRef(0);
 
   useEffect(() => {
     if (window.matchMedia('(hover: none)').matches) return;
@@ -24,8 +28,8 @@ export default function StarCursor() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let w = (canvas.width = window.innerWidth);
-    let h = (canvas.height = window.innerHeight);
+    let w = window.innerWidth;
+    let h = window.innerHeight;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = w * dpr;
     canvas.height = h * dpr;
@@ -42,7 +46,12 @@ export default function StarCursor() {
     let hovering = false;
     let hoverScale = 1;
 
-    const trail: TrailDot[] = [];
+    const pool: TrailDot[] = [];
+    for (let i = 0; i < TRAIL_POOL_SIZE; i++) {
+      pool.push({ x: 0, y: 0, life: 1, maxLife: 1, r: 0 });
+    }
+    poolRef.current = pool;
+    poolIdxRef.current = 0;
 
     const onMove = (e: MouseEvent) => {
       mx = e.clientX;
@@ -66,7 +75,6 @@ export default function StarCursor() {
     window.addEventListener('resize', onResize);
 
     const render = () => {
-      // Easing toward mouse
       dx += (mx - dx) * 0.35;
       dy += (my - dy) * 0.35;
       rx += (mx - rx) * 0.15;
@@ -82,32 +90,29 @@ export default function StarCursor() {
         ring.style.opacity = hovering ? '0.9' : '0.5';
       }
 
-      // Spawn trail particles
       const speed = Math.hypot(mx - dx, my - dy);
       if (speed > 1) {
         const count = Math.min(3, Math.floor(speed / 4));
         for (let i = 0; i < count; i++) {
-          trail.push({
-            x: dx + (Math.random() - 0.5) * 6,
-            y: dy + (Math.random() - 0.5) * 6,
-            life: 0,
-            maxLife: 30 + Math.random() * 30,
-            r: 1 + Math.random() * 2,
-          });
+          const idx = poolIdxRef.current;
+          poolRef.current[idx].x = dx + (Math.random() - 0.5) * 6;
+          poolRef.current[idx].y = dy + (Math.random() - 0.5) * 6;
+          poolRef.current[idx].life = 0;
+          poolRef.current[idx].maxLife = 30 + Math.floor(Math.random() * 30);
+          poolRef.current[idx].r = 1 + Math.random() * 2;
+          poolIdxRef.current = (idx + 1) % TRAIL_POOL_SIZE;
         }
       }
 
       ctx.clearRect(0, 0, w, h);
-      for (let i = trail.length - 1; i >= 0; i--) {
-        const p = trail[i];
+      for (let i = 0; i < TRAIL_POOL_SIZE; i++) {
+        const p = poolRef.current[i];
+        if (p.life >= p.maxLife || p.maxLife <= 0) continue;
         p.life++;
         const a = Math.sin((p.life / p.maxLife) * Math.PI) * 0.7;
-        if (p.life > p.maxLife) {
-          trail.splice(i, 1);
-          continue;
-        }
+        const radius = Math.max(0, p.r * (1 - p.life / p.maxLife));
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r * (1 - p.life / p.maxLife), 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(150, 210, 255, ${a})`;
         ctx.fill();
       }

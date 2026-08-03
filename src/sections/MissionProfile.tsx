@@ -1,4 +1,5 @@
 import { useInView } from '@/hooks/useScroll';
+import { memo } from 'react';
 import { Briefcase, Code2, Target, MapPin, Layers, Cpu } from 'lucide-react';
 
 const STATS = [
@@ -8,7 +9,7 @@ const STATS = [
   { icon: Target, label: 'CURRENT FOCUS', value: 'AI', sub: 'FULL STACK SYSTEMS' },
 ];
 
-export default function MissionProfile() {
+const MissionProfile = memo(() => {
   const { ref, inView } = useInView<HTMLDivElement>(0.2);
 
   return (
@@ -109,4 +110,6 @@ export default function MissionProfile() {
       </div>
     </section>
   );
-}
+});
+
+export default MissionProfile;

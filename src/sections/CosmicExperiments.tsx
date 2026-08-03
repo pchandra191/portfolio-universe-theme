@@ -1,4 +1,5 @@
 import { useInView } from '@/hooks/useScroll';
+import { memo } from 'react';
 import { FlaskConical, ArrowUpRight } from 'lucide-react';
 
 const EXPERIMENTS = [
@@ -218,7 +219,7 @@ function EarthBackground({ inView }: { inView: boolean }) {
   );
 }
 
-export default function CosmicExperiments() {
+const CosmicExperiments = memo(function CosmicExperiments() {
   const { ref, inView } = useInView<HTMLDivElement>(0.1);
 
   return (
@@ -308,4 +309,6 @@ export default function CosmicExperiments() {
       </div>
     </section>
   );
-}
+});
+
+export default CosmicExperiments;

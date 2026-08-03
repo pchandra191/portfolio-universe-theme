@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 import { Rocket, ChevronDown } from 'lucide-react';
 
 const OPENING_LINES = [
@@ -6,7 +6,7 @@ const OPENING_LINES = [
   'Others span galaxies.',
 ];
 
-export default function Hero() {
+const Hero = memo(function Hero() {
   const [lineIdx, setLineIdx] = useState(0);
   const [typed, setTyped] = useState('');
   const [done, setDone] = useState(false);
@@ -120,4 +120,6 @@ export default function Hero() {
       </div>
     </section>
   );
-}
+});
+
+export default Hero;

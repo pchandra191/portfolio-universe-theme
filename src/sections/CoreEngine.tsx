@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { useInView } from '@/hooks/useScroll';
 
 const TECHS = [
@@ -20,8 +20,8 @@ const TECHS = [
 const RING_RADII = [245, 380];
 const RING_SPEEDS = [40, 55];
 
-export default function CoreEngine() {
-  const { ref, inView } = useInView<HTMLDivElement>(0.15);
+const CoreEngine = memo(function CoreEngine() {
+  const { ref } = useInView<HTMLDivElement>(0.15);
   const [hovered, setHovered] = useState<string | null>(null);
 
   return (
@@ -153,4 +153,6 @@ export default function CoreEngine() {
       </div>
     </section>
   );
-}
+});
+
+export default CoreEngine;

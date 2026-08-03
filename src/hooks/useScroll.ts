@@ -41,7 +41,7 @@ export function useScrollProgress() {
 }
 
 export function useActiveSection(ids: string[]) {
-  const [active, setActive] = useState(ids[0]);
+  const [active, setActive] = useState(ids[0] || '');
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
     ids.forEach((id) => {
@@ -64,15 +64,22 @@ export function useActiveSection(ids: string[]) {
 export function useScrollPct() {
   const [pct, setPct] = useState(0);
   useEffect(() => {
+    let raf = 0;
     const onScroll = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const p = max > 0 ? (window.scrollY / max) * 100 : 0;
       setPct(p);
     };
-    const throttled = () => requestAnimationFrame(onScroll);
+    const throttled = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(onScroll);
+    };
     window.addEventListener('scroll', throttled, { passive: true });
     onScroll();
-    return () => window.removeEventListener('scroll', throttled);
+    return () => {
+      window.removeEventListener('scroll', throttled);
+      cancelAnimationFrame(raf);
+    };
   }, []);
   return pct;
 }

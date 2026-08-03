@@ -1,7 +1,8 @@
 import { useInView } from '@/hooks/useScroll';
+import { memo } from 'react';
 import { Mail, Github, Linkedin, FileText, Radio } from 'lucide-react';
 
-export default function FinalTransmission() {
+const FinalTransmission = memo(function FinalTransmission() {
   const { ref, inView } = useInView<HTMLDivElement>(0.15);
 
   return (
@@ -88,4 +89,6 @@ export default function FinalTransmission() {
       </div>
     </section>
   );
-}
+});
+
+export default FinalTransmission;
