@@ -114,7 +114,7 @@ export default function SatelliteNetworkNotification({
             <div className="space-y-1.5 font-mono text-[0.6rem] tracking-[0.15em]">
               <div className="flex items-center justify-center gap-2 text-white/70">
                 <CheckCircle2 className="w-3 h-3 text-green-400" />
-                <span>20 / 20 SATELLITES DEPLOYED</span>
+                <span>5 / 5 SATELLITES DEPLOYED</span>
               </div>
               <div className="flex items-center justify-center gap-2 text-white/70">
                 <CheckCircle2 className="w-3 h-3 text-green-400" />

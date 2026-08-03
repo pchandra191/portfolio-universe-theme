@@ -1,4 +1,4 @@
-import { useEffect, useState, memo } from 'react';
+import { useEffect, useState, useRef, memo } from 'react';
 import { Rocket, ChevronDown } from 'lucide-react';
 
 const OPENING_LINES = [
@@ -7,32 +7,52 @@ const OPENING_LINES = [
 ];
 
 const Hero = memo(function Hero() {
-  const [lineIdx, setLineIdx] = useState(0);
   const [typed, setTyped] = useState('');
   const [done, setDone] = useState(false);
+  const lineIdxRef = useRef(0);
+  const typedRef = useRef('');
+  const rafRef = useRef<number>(0);
+  const lastTickRef = useRef<number>(0);
 
   useEffect(() => {
-    const full = OPENING_LINES[lineIdx];
-    if (typed.length < full.length) {
-      const t = setTimeout(() => setTyped(full.slice(0, typed.length + 1)), 35);
-      return () => clearTimeout(t);
-    } else {
-      if (lineIdx < OPENING_LINES.length - 1) {
-        const t = setTimeout(() => {
-          setLineIdx(lineIdx + 1);
-          setTyped('');
-        }, 1400);
-        return () => clearTimeout(t);
-      } else {
-        setDone(true);
-        const t = setTimeout(() => {
-          setLineIdx(0);
-          setTyped('');
-        }, 3000);
-        return () => clearTimeout(t);
+    const TICK_MS = 35;
+    const LINE_DELAY_MS = 1400;
+    const LOOP_DELAY_MS = 3000;
+
+    const tick = (ts: number) => {
+      if (ts - lastTickRef.current >= TICK_MS) {
+        lastTickRef.current = ts;
+        const idx = lineIdxRef.current;
+        const full = OPENING_LINES[idx];
+        const current = typedRef.current;
+
+        if (current.length < full.length) {
+          typedRef.current = full.slice(0, current.length + 1);
+          setTyped(typedRef.current);
+        } else {
+          if (idx < OPENING_LINES.length - 1) {
+            setTimeout(() => {
+              lineIdxRef.current = idx + 1;
+              typedRef.current = '';
+              setTyped('');
+            }, LINE_DELAY_MS);
+          } else {
+            setDone(true);
+            setTimeout(() => {
+              lineIdxRef.current = 0;
+              typedRef.current = '';
+              setTyped('');
+              setDone(false);
+            }, LOOP_DELAY_MS);
+          }
+        }
       }
-    }
-  }, [typed, lineIdx]);
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
 
   const scrollToNext = () => {
     document.getElementById('profile')?.scrollIntoView({ behavior: 'smooth' });
@@ -52,10 +72,12 @@ const Hero = memo(function Hero() {
       </div>
 
       {/* Opening cinematic text */}
-      <p className="font-mono text-[0.7rem] sm:text-xs tracking-[0.15em] text-cyan-300/70 mb-8 min-h-[1.2rem] text-center max-w-md">
-        {typed}
-        <span className="inline-block w-1.5 h-3 bg-cyan-400 ml-0.5 align-middle" style={{ animation: 'blink 0.8s step-end infinite' }} />
-      </p>
+      <div className="h-8 sm:h-9 flex items-center justify-center mb-8">
+        <p className="font-mono text-[0.7rem] sm:text-xs tracking-[0.15em] text-cyan-300/70 text-center max-w-md">
+          {typed}
+          <span className="inline-block w-1.5 h-3 bg-cyan-400 ml-0.5 align-middle" style={{ animation: 'blink 0.8s step-end infinite' }} />
+        </p>
+      </div>
 
       {/* Massive title */}
       <h1

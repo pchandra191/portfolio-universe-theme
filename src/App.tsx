@@ -3,6 +3,7 @@ import UniverseBackground from '@/components/UniverseBackground';
 import StarCursor from '@/components/StarCursor';
 import HudNav from '@/components/HudNav';
 import SatelliteNetworkNotification from '@/components/SatelliteNetworkNotification';
+import LoadingScreen from '@/components/LoadingScreen';
 import { useScrollProgress, useActiveSection, useScrollPct } from '@/hooks/useScroll';
 
 const SECTION_IDS = ['hero', 'profile', 'engine', 'logs', 'archive', 'experiments', 'contact'];
@@ -24,9 +25,11 @@ function App() {
   const scrollPct = useScrollPct();
   const activeSection = useActiveSection(SECTION_IDS);
   const [showNetworkComplete, setShowNetworkComplete] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const handleNetworkComplete = useMemo(() => () => setShowNetworkComplete(true), []);
   const handleNetworkDismiss = useMemo(() => () => setShowNetworkComplete(false), []);
+  const handleLoadingComplete = useMemo(() => () => setLoading(false), []);
 
   return (
     <>
@@ -36,6 +39,7 @@ function App() {
       />
       <StarCursor />
       <HudNav activeSection={activeSection} scrollPct={scrollPct} />
+      {loading && <LoadingScreen onComplete={handleLoadingComplete} />}
       <div className="zoom-content">
         <SatelliteNetworkNotification
           show={showNetworkComplete}

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface TrailDot {
   x: number;
@@ -17,10 +17,18 @@ export default function StarCursor() {
   const rafRef = useRef<number>(0);
   const poolRef = useRef<TrailDot[]>([]);
   const poolIdxRef = useRef(0);
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    if (window.matchMedia('(hover: none)').matches) return;
+    const mq = window.matchMedia('(hover: none)');
+    setEnabled(!mq.matches);
+    const handler = (e: MediaQueryListEvent) => setEnabled(!e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
 
+  useEffect(() => {
+    if (!enabled) return;
     const dot = dotRef.current;
     const ring = ringRef.current;
     const canvas = canvasRef.current;
@@ -126,9 +134,9 @@ export default function StarCursor() {
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('resize', onResize);
     };
-  }, []);
+  }, [enabled]);
 
-  return (
+  return enabled ? (
     <>
       <canvas
         ref={canvasRef}
@@ -154,5 +162,5 @@ export default function StarCursor() {
         }}
       />
     </>
-  );
+  ) : null;
 }
