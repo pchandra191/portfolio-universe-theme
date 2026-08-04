@@ -7,9 +7,9 @@ const FinalTransmission = memo(function FinalTransmission() {
 
   return (
     <section id="contact" className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-32">
-      <div ref={ref} className="max-w-3xl mx-auto w-full text-center">
-        {/* Terminal header */}
-        <div className="glass rounded-2xl overflow-hidden mb-8" style={{ opacity: inView ? 1 : 0, transition: 'all 1s ease' }}>
+        <div ref={ref} className="max-w-3xl mx-auto w-full text-center">
+         {/* Terminal header */}
+         <div className="glass rounded-2xl overflow-hidden mb-8" style={{ opacity: inView ? 1 : 0, transform: inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.8s cubic-bezier(0.22,1,0.36,1)' }}>
           <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/8" style={{ background: 'rgba(255,255,255,0.02)' }}>
             <span className="w-2.5 h-2.5 rounded-full bg-red-400/60" />
             <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/60" />
@@ -34,7 +34,7 @@ const FinalTransmission = memo(function FinalTransmission() {
 
             <div
               className="transition-all duration-1000"
-              style={{ opacity: inView ? 1 : 0, transform: inView ? 'translateY(0)' : 'translateY(20px)' }}
+              style={{ opacity: inView ? 1 : 0, transform: inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.8s cubic-bezier(0.22,1,0.36,1)' }}
             >
               <h2 className="font-display text-3xl sm:text-5xl font-bold leading-tight mb-2">
                 <span className="bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent">
@@ -79,7 +79,7 @@ const FinalTransmission = memo(function FinalTransmission() {
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" style={{ animation: 'blink 2s ease-in-out infinite' }} />
             <span className="font-mono text-[0.55rem] tracking-[0.2em] text-white/40">
-              SIGNAL MAINTAINED · END OF TRANSMISSION
+              SIGNAL MAINTAINED DUE TO GRAVITY
             </span>
           </div>
           <p className="font-mono text-[0.5rem] tracking-[0.15em] text-white/25">

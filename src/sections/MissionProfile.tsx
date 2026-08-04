@@ -14,9 +14,13 @@ const MissionProfile = memo(() => {
 
   return (
     <section id="profile" className="relative min-h-screen flex flex-col justify-center px-4 sm:px-6 py-32">
-      <div ref={ref} className={`max-w-6xl mx-auto w-full ${inView ? 'in-view' : ''} reveal ${inView ? 'in-view' : ''}`}>
+      <div ref={ref} className="max-w-6xl mx-auto w-full">
         {/* Section header */}
-        <div className="mb-16 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+        <div className="mb-16 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4" style={{
+          opacity: inView ? 1 : 0,
+          transform: inView ? 'translateY(0)' : 'translateY(20px)',
+          transition: 'all 0.8s cubic-bezier(0.22,1,0.36,1)',
+        }}>
           <div>
             <span className="section-label block mb-3">/ 01 — Event Horizon</span>
             <h2 className="font-display text-4xl sm:text-6xl font-bold leading-tight text-balance">
@@ -43,9 +47,9 @@ const MissionProfile = memo(() => {
                 key={s.label}
                 className="glass glass-hover hud-corner rounded-xl p-5 sm:p-6 group"
                 style={{
-                  transitionDelay: `${i * 100}ms`,
+                  transitionDelay: `${i * 70}ms`,
                   opacity: inView ? 1 : 0,
-                  transform: inView ? 'translateY(0)' : 'translateY(30px)',
+                  transform: inView ? 'translateY(0)' : 'translateY(20px)',
                   transition: 'all 0.8s cubic-bezier(0.22,1,0.36,1)',
                 }}
               >

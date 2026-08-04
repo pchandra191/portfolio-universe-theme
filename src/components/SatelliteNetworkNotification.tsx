@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Satellite, Radio, CheckCircle2 } from 'lucide-react';
 
 export default function SatelliteNetworkNotification({
@@ -8,19 +8,86 @@ export default function SatelliteNetworkNotification({
   show: boolean;
   onComplete: () => void;
 }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isHiding, setIsHiding] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const rafRef = useRef<number>(0);
+  const hideTimerRef = useRef<number>(0);
+  const initializedRef = useRef(false);
+
   useEffect(() => {
     if (!show) return;
-    const timer = setTimeout(onComplete, 6500);
-    return () => clearTimeout(timer);
+
+    hideTimerRef.current = window.setTimeout(() => {
+      setIsHiding(true);
+      setTimeout(() => {
+        setIsVisible(false);
+        setIsHiding(false);
+        onComplete();
+      }, 600);
+    }, 4000);
+
+    return () => clearTimeout(hideTimerRef.current);
   }, [show, onComplete]);
 
-  if (!show) return null;
+  useEffect(() => {
+    if (!show) return;
+
+    const notificationWidth = 420;
+    const notificationHeight = 320;
+
+    const startTime = performance.now();
+
+    const tick = () => {
+      const elapsed = performance.now() - startTime;
+      const floatX = Math.sin(elapsed * 0.002) * 6;
+      const floatY = Math.cos(elapsed * 0.0025) * 5;
+
+      const rightOffset = 30;
+      const topOffset = 30;
+
+      let baseX = window.innerWidth - notificationWidth - rightOffset + floatX;
+      let baseY = topOffset + floatY;
+
+      baseX = Math.max(20, Math.min(baseX, window.innerWidth - notificationWidth - 20));
+      baseY = Math.max(20, Math.min(baseY, window.innerHeight - notificationHeight - 20));
+
+      setPosition({ x: baseX, y: baseY });
+
+      if (!isVisible && !initializedRef.current) {
+        initializedRef.current = true;
+        setIsVisible(true);
+      }
+
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [show, isVisible]);
+
+  if (!show || !isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-end p-6 pointer-events-none">
+    <div
+      className="fixed pointer-events-none"
+      style={{
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+        zIndex: 50,
+        opacity: isHiding ? 0 : 1,
+        transform: isHiding
+          ? 'scale(0.9) translateY(10px)'
+          : 'scale(1) translateY(0)',
+        transition: 'all 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
+      }}
+    >
       <div
         className="relative"
-        style={{ animation: 'hud-notification 6.5s cubic-bezier(0.22, 1, 0.36, 1) forwards' }}
+        style={{
+          animation: isHiding ? 'none' : 'hud-notification 6.5s cubic-bezier(0.22, 1, 0.36, 1) forwards',
+        }}
       >
         {/* Outer glow */}
         <div

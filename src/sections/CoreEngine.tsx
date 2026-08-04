@@ -35,7 +35,7 @@ const VIEWPORT_PADDING = 32;
 const RING_LABELS = ['Inner Orbit', 'Core Orbit'];
 
 const CoreEngine = memo(function CoreEngine() {
-  const { ref } = useInView<HTMLDivElement>(0.15);
+  const { ref, inView } = useInView<HTMLDivElement>(0.15);
   const [hovered, setHovered] = useState<string | null>(null);
   const [active, setActive] = useState<string | null>(null);
   const [orbitScale, setOrbitScale] = useState(() => {
@@ -111,7 +111,11 @@ const CoreEngine = memo(function CoreEngine() {
     <section id="engine" className="relative min-h-screen flex flex-col justify-center px-4 sm:px-6 py-16 sm:py-24 md:py-32">
       <div ref={ref} className="max-w-6xl mx-auto w-full">
         {/* Header */}
-        <div className="mb-8 sm:mb-12 text-center">
+        <div className="mb-8 sm:mb-12 text-center" style={{
+          opacity: inView ? 1 : 0,
+          transform: inView ? 'translateY(0)' : 'translateY(20px)',
+          transition: 'all 0.8s cubic-bezier(0.22,1,0.36,1)',
+        }}>
           <span className="section-label block mb-3">/ 02 — Virgo Cluster</span>
           <h2 className="font-display text-2xl sm:text-3xl md:text-6xl font-bold leading-tight mb-4">
             <span className="bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent">

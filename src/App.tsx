@@ -26,10 +26,14 @@ function App() {
   const activeSection = useActiveSection(SECTION_IDS);
   const [showNetworkComplete, setShowNetworkComplete] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [loaded, setLoaded] = useState(false);
 
   const handleNetworkComplete = useMemo(() => () => setShowNetworkComplete(true), []);
   const handleNetworkDismiss = useMemo(() => () => setShowNetworkComplete(false), []);
-  const handleLoadingComplete = useMemo(() => () => setLoading(false), []);
+  const handleLoadingComplete = useMemo(() => () => {
+    setLoading(false);
+    setTimeout(() => setLoaded(true), 100);
+  }, []);
 
   return (
     <>
@@ -40,11 +44,11 @@ function App() {
       <StarCursor />
       <HudNav activeSection={activeSection} scrollPct={scrollPct} />
       {loading && <LoadingScreen onComplete={handleLoadingComplete} />}
-      <div className="zoom-content">
-        <SatelliteNetworkNotification
-          show={showNetworkComplete}
-          onComplete={handleNetworkDismiss}
-        />
+      <SatelliteNetworkNotification
+        show={showNetworkComplete}
+        onComplete={handleNetworkDismiss}
+      />
+      <div className={`zoom-content ${loaded ? 'loaded' : ''}`}>
 
         <div className="relative z-10">
           <Suspense fallback={<SectionFallback />}>

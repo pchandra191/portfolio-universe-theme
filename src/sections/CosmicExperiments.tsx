@@ -254,8 +254,8 @@ const CosmicExperiments = memo(function CosmicExperiments() {
               className="glass glass-hover hud-corner rounded-2xl p-6 group relative overflow-hidden"
               style={{
                 opacity: inView ? 1 : 0,
-                transform: inView ? 'translateY(0)' : 'translateY(40px)',
-                transition: `all 0.8s cubic-bezier(0.22,1,0.36,1) ${i * 120}ms`,
+                transform: inView ? 'translateY(0)' : 'translateY(20px)',
+                transition: `all 0.8s cubic-bezier(0.22,1,0.36,1) ${i * 70}ms`,
               }}
             >
               {/* Accent glow */}

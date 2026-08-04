@@ -89,8 +89,8 @@ const MissionLogs = memo(function MissionLogs() {
                 className="relative mb-12 last:mb-0"
                 style={{
                   opacity: inView ? 1 : 0,
-                  transform: inView ? 'translateY(0)' : 'translateY(40px)',
-                  transition: `all 0.8s cubic-bezier(0.22,1,0.36,1) ${i * 150}ms`,
+                  transform: inView ? 'translateY(0)' : 'translateY(20px)',
+                  transition: `all 0.8s cubic-bezier(0.22,1,0.36,1) ${i * 70}ms`,
                 }}
               >
                 <div className={`flex ${left ? 'sm:justify-start' : 'sm:justify-end'}`}>

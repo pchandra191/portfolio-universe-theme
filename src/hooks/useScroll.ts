@@ -1,12 +1,23 @@
-import { useEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useEffect, useRef, useState } from 'react';
 
-export function useInView<T extends HTMLElement>(threshold = 0.15) {
+export function useInView<T extends HTMLElement>(threshold = 0.15, initialInView = false) {
   const ref = useRef<T>(null);
-  const [inView, setInView] = useState(false);
+  const [inView, setInView] = useState(initialInView);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    if (initialInView) return;
     const el = ref.current;
     if (!el) return;
+
+    const rect = el.getBoundingClientRect();
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    const isInView = rect.top < windowHeight && rect.bottom > 0;
+
+    if (isInView) {
+      setInView(true);
+      return;
+    }
+
     const obs = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -18,7 +29,7 @@ export function useInView<T extends HTMLElement>(threshold = 0.15) {
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, [threshold]);
+  }, [threshold, initialInView]);
 
   return { ref, inView };
 }

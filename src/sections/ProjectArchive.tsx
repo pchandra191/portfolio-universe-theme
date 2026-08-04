@@ -6,9 +6,9 @@ const PROJECTS = [
   {
     name: 'EduPulse AI',
     tag: 'AI · EDUCATION SaaS · B2B and B2C',
-    desc: 'Adaptive learning platform powered by AI. Generates personalized study paths and real-time performance analytics.',
+    desc: 'A CRM platform with adaptive learning platform powered by AI.',
     stack: ['Agentic AI', 'React', 'Symfony', 'PostgreSQL'],
-    metrics: { Status: 'Under development', scale: 'Multi-tenant' },
+    metrics: { users: '0', Status: 'Under development', scale: 'Multi-tenant' },
     url: 'https://syntaxbase.online/edupulseai',
     logo: '/logos/edupulse-ai.webp'
 
@@ -16,9 +16,9 @@ const PROJECTS = [
   {
     name: 'TruFin',
     tag: 'FINANCE SaaS · B2B',
-    desc: 'AI-driven financial analytics platform for SMEs. Provides predictive insights, risk assessment, and automated reporting.',
+    desc: 'AI-driven financial analytics platform for SMEs.',
     stack: ['React', 'MongoDB', 'Express.js'],
-    metrics: { Status: 'Under development', scale: 'Multi-tenant' },
+    metrics: { users: '0', Status: 'Under development', scale: 'Multi-tenant' },
     url: 'https://truefin.tech',
     logo: '/logos/trufin.webp'
 
@@ -28,7 +28,7 @@ const PROJECTS = [
     tag: 'AI · PROGRAMMING EDUCATION · COMMUNITY PLATFORM · B2C',
     desc: 'Code snippet management and API documentation hub with collaborative editing and version control.',
     stack: ['OpenAI', 'React', 'Symfony', 'MySQL'],
-    metrics: { users: '200+', Status: 'Active', scale: '2K+', rating: '4.8★' },
+    metrics: { users: '200+', Status: 'Active', scale: '2K+'},
     url: 'https://syntaxbase.online',
     logo: '/logos/syntaxbase.webp'
 
@@ -67,8 +67,8 @@ const ProjectArchive = memo(function ProjectArchive() {
               className="glass glass-hover hud-corner rounded-2xl p-6 sm:p-7 group relative overflow-hidden"
               style={{
                 opacity: inView ? 1 : 0,
-                transform: inView ? 'translateY(0)' : 'translateY(40px)',
-                transition: `all 0.8s cubic-bezier(0.22,1,0.36,1) ${i * 120}ms`,
+                transform: inView ? 'translateY(0)' : 'translateY(20px)',
+                transition: `all 0.8s cubic-bezier(0.22,1,0.36,1) ${i * 70}ms`,
               }}
             >
               {/* Glow on hover */}

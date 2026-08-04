@@ -1681,7 +1681,7 @@ export default memo(function UniverseBackground({
   }, [scrollProgress]);
 
   return (
-    <div className="fixed inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>
+    <div className="fixed inset-0 w-full h-full pointer-events-none universe-bg" style={{ zIndex: 0 }}>
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full"
