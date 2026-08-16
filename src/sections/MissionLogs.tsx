@@ -30,7 +30,7 @@ const MISSIONS = [
     stack: ['Laravel', 'JavaScript', 'MySQL'],
   },
   {
-    company: 'VSUIT CRM',
+    company: 'VSUIT',
     role: 'Backend Developer',
     period: 'Aug 2022 — Sept 2023',
     status: 'COMPLETED',
