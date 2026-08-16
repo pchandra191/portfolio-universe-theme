@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@property --bg-color-1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: rgba(56, 189, 248, 0.15);
+}
+
+@property --bg-color-2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: rgba(2, 6, 23, 1);
+}
+
+@property --glow-y {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 30%;
+}
+
 @layer base {
   :root {
     --bg: #000000;
@@ -404,4 +422,17 @@
 ::selection {
   background: rgba(106, 208, 255, 0.3);
   color: #fff;
+}
+
+.scroll-bg-glow {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% var(--glow-y, 30%),
+    var(--bg-color-1, rgba(56, 189, 248, 0.15)),
+    var(--bg-color-2, rgba(2, 6, 23, 1))
+  );
+  transition: --bg-color-1 0.4s ease, --bg-color-2 0.4s ease, --glow-y 0.4s ease;
 }

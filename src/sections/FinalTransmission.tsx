@@ -85,6 +85,9 @@ const FinalTransmission = memo(function FinalTransmission() {
           <p className="font-mono text-[0.5rem] tracking-[0.15em] text-white/25">
             PRABHAT CHANDRA · FULL STACK SOFTWARE DEVELOPER · 2026
           </p>
+           <p className="font-mono text-[0.5rem] tracking-[0.15em] text-white/25">
+            FOR BEST EXPERIENCE, VIEW ON A DESKTOP MODE
+          </p>
         </div>
       </div>
     </section>

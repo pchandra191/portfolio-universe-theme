@@ -1,5 +1,6 @@
 import { useState, useMemo, Suspense, lazy } from 'react';
 import UniverseBackground from '@/components/UniverseBackground';
+import ScrollBackgroundGlow from '@/components/ScrollBackgroundGlow';
 import StarCursor from '@/components/StarCursor';
 import HudNav from '@/components/HudNav';
 import SatelliteNetworkNotification from '@/components/SatelliteNetworkNotification';
@@ -37,6 +38,7 @@ function App() {
 
   return (
     <>
+      <ScrollBackgroundGlow scrollProgress={scrollProgress} />
       <UniverseBackground
         scrollProgress={scrollProgress}
         onNetworkComplete={handleNetworkComplete}

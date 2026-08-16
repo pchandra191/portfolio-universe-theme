@@ -920,7 +920,7 @@ export default memo(function UniverseBackground({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d', { alpha: false });
+    const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
     let w = window.innerWidth;
@@ -1203,8 +1203,9 @@ export default memo(function UniverseBackground({
       const curHue = r1.hue + (r2.hue - r1.hue) * blend;
       const curHue2 = r1.hue2 + (r2.hue2 - r1.hue2) * blend;
 
-      ctx.fillStyle = '#000000';
-      ctx.fillRect(0, 0, w, h);
+      // Transparent base so the scroll-driven radial glow behind the canvas
+      // (z-index -1) reads through as the dynamic cosmic background.
+      ctx.clearRect(0, 0, w, h);
 
       const scrollOffset = sp * h * 2.5;
 
