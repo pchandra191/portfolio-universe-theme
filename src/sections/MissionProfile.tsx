@@ -82,7 +82,7 @@ const MissionProfile = memo(() => {
                 Base of Operations
               </div>
               <div className="font-display text-lg sm:text-xl text-white/90">
-                India · Earth
+                India · Remote 
               </div>
             </div>
           </div>
@@ -94,7 +94,7 @@ const MissionProfile = memo(() => {
                 As Human
               </div>
               <div className="font-display text-lg sm:text-xl text-white/90">
-                Male(he/Him) · English/Hindi · 1996
+                Male · English/Hindi 
               </div>
             </div>
           </div>
@@ -106,7 +106,7 @@ const MissionProfile = memo(() => {
                 Mission Vector
               </div>
               <div className="font-display text-lg sm:text-xl text-white/90">
-                AI-Powered Products
+                AI-Powered SaaS
               </div>
             </div>
           </div>

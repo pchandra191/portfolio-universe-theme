@@ -107,13 +107,13 @@ const Hero = memo(function Hero() {
       </div>
 
       {/* Massive title */}
-      <h1
+      <h4
         className="font-display text-center leading-[0.95] text-balance px-2 hero-reveal"
         style={{
-          fontSize: 'clamp(2.75rem, 11vw, 9rem)',
+          fontSize: 'clamp(5rem, 5vw, 5rem)',
           fontWeight: 700,
           textShadow: '0 0 80px rgba(106,208,255,0.25)',
-          animationDelay: '0.3s',
+          animationDelay: '0.6s',
         }}
       >
         <span className="block bg-gradient-to-b from-white via-white to-white/40 bg-clip-text text-transparent">
@@ -122,18 +122,18 @@ const Hero = memo(function Hero() {
         <span className="block bg-gradient-to-b from-cyan-200 via-cyan-300 to-indigo-400 bg-clip-text text-transparent">
           CHANDRA
         </span>
-      </h1>
+      </h4>
 
       {/* Subtitle */}
       <div
         className="mt-8 flex flex-col items-center gap-3 transition-all duration-1000 hero-reveal"
         style={{ animationDelay: '0.5s', transitionDelay: '0.5s' }}
       >
-        <p className="font-mono text-xs sm:text-sm tracking-[0.3em] text-white/70 uppercase">
-          Full Stack Software Developer
+        <p className="font-mono text-xs sm:text-sm tracking-[0.3em] text-white/60 uppercase">
+          Software Engineer
         </p>
-        <p className="font-mono text-[0.6rem] sm:text-[0.65rem] tracking-[0.2em] text-white/40 uppercase">
-          5+ Years Building Digital Worlds
+        <p className="font-mono text-[0.6rem] sm:text-[0.65rem] tracking-[0.2em] text-white/90 uppercase">
+          5+ Years Building Professional Digital Worlds
         </p>
       </div>
 
