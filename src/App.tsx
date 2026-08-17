@@ -7,7 +7,7 @@ import SatelliteNetworkNotification from '@/components/SatelliteNetworkNotificat
 import LoadingScreen from '@/components/LoadingScreen';
 import { useScrollProgress, useActiveSection, useScrollPct } from '@/hooks/useScroll';
 
-const SECTION_IDS = ['hero', 'profile', 'engine', 'logs', 'archive', 'experiments', 'contact'];
+const SECTION_IDS = ['hero', 'profile', 'engine', 'logs', 'archive', 'experiments', 'edupulse', 'contact'];
 
 const Hero = lazy(() => import('@/sections/Hero'));
 const MissionProfile = lazy(() => import('@/sections/MissionProfile'));
@@ -15,6 +15,7 @@ const CoreEngine = lazy(() => import('@/sections/CoreEngine'));
 const MissionLogs = lazy(() => import('@/sections/MissionLogs'));
 const ProjectArchive = lazy(() => import('@/sections/ProjectArchive'));
 const CosmicExperiments = lazy(() => import('@/sections/CosmicExperiments'));
+const EduPulseAI = lazy(() => import('@/sections/EduPulseAI'));
 const FinalTransmission = lazy(() => import('@/sections/FinalTransmission'));
 
 function SectionFallback() {
@@ -70,6 +71,9 @@ function App() {
           </Suspense>
           <Suspense fallback={<SectionFallback />}>
             <CosmicExperiments />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <EduPulseAI />
           </Suspense>
           <Suspense fallback={<SectionFallback />}>
             <FinalTransmission />

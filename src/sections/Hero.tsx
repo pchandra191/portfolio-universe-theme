@@ -3,8 +3,8 @@ import { useInView } from '@/hooks/useScroll';
 import { Rocket, ChevronDown } from 'lucide-react';
 
 const OPENING_LINES = [
-  'Some journeys begin with a single line of code...',
-  'Others span galaxies.',
+  'Full Stack Software Developer with 5+ years of production experience...',
+  'PHP · Symfony · Laravel · React · AWS · Linux',
 ];
 
 const Hero = memo(function Hero() {
@@ -17,6 +17,8 @@ const Hero = memo(function Hero() {
   const transitionScheduledRef = useRef(false);
   const doneRef = useRef(false);
   const { ref } = useInView<HTMLElement>(0, true);
+  const [heroScale, setHeroScale] = useState(1);
+  const [heroOpacity, setHeroOpacity] = useState(1);
 
   useEffect(() => {
     startTimeRef.current = performance.now();
@@ -84,6 +86,35 @@ const Hero = memo(function Hero() {
     document.getElementById('profile')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  useEffect(() => {
+    const onScroll = () => {
+      const el = ref.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const scrolledPast = Math.max(0, -rect.top);
+      const maxScroll = windowHeight * 0.8;
+      const progress = Math.min(1, scrolledPast / maxScroll);
+      const scale = 1 - progress * 0.15;
+      const opacity = 1 - progress * 0.6;
+      setHeroScale(scale);
+      setHeroOpacity(opacity);
+    };
+    let ticking = false;
+    const onScrollThrottled = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          onScroll();
+          ticking = false;
+        });
+      }
+    };
+    window.addEventListener('scroll', onScrollThrottled, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScrollThrottled);
+  }, [ref]);
+
   return (
     <section
       ref={ref}
@@ -106,46 +137,54 @@ const Hero = memo(function Hero() {
         </p>
       </div>
 
-      {/* Massive title */}
-      <h1
-        className="font-display text-center leading-[0.95] text-balance px-2 hero-reveal"
-        style={{
-          fontSize: 'clamp(2.75rem, 11vw, 9rem)',
-          fontWeight: 700,
-          textShadow: '0 0 80px rgba(106,208,255,0.25)',
-          animationDelay: '0.3s',
-        }}
-      >
-        <span className="block bg-gradient-to-b from-white via-white to-white/40 bg-clip-text text-transparent">
-          PRABHAT
-        </span>
-        <span className="block bg-gradient-to-b from-cyan-200 via-cyan-300 to-indigo-400 bg-clip-text text-transparent">
-          CHANDRA
-        </span>
-      </h1>
+      {/* Hero content wrapper for scroll-linked transform */}
+      <div style={{
+        transform: `scale(${heroScale})`,
+        opacity: heroOpacity,
+        transition: 'transform 0.1s ease-out, opacity 0.1s ease-out',
+        willChange: 'transform, opacity',
+      }}>
+        {/* Massive title */}
+        <h1
+          className="font-display text-center leading-[0.95] text-balance px-2 hero-reveal"
+          style={{
+            fontSize: 'clamp(2.75rem, 11vw, 9rem)',
+            fontWeight: 700,
+            textShadow: '0 0 80px rgba(106,208,255,0.25)',
+            animationDelay: '0.3s',
+          }}
+        >
+          <span className="block bg-gradient-to-b from-white via-white to-white/40 bg-clip-text text-transparent text-reveal">
+            PRABHAT
+          </span>
+          <span className="block bg-gradient-to-b from-cyan-200 via-cyan-300 to-indigo-400 bg-clip-text text-transparent text-reveal-delay">
+            CHANDRA
+          </span>
+        </h1>
 
-      {/* Subtitle */}
-      <div
-        className="mt-8 flex flex-col items-center gap-3 transition-all duration-1000 hero-reveal"
-        style={{ animationDelay: '0.5s', transitionDelay: '0.5s' }}
-      >
-        <p className="font-mono text-xs sm:text-sm tracking-[0.3em] text-white/70 uppercase">
-          Full Stack Software Developer
-        </p>
-        <p className="font-mono text-[0.6rem] sm:text-[0.65rem] tracking-[0.2em] text-white/40 uppercase">
-          5+ Years Building Digital Worlds
-        </p>
-      </div>
+        {/* Subtitle */}
+        <div
+          className="mt-8 flex flex-col items-center gap-3 transition-all duration-1000 hero-reveal"
+          style={{ animationDelay: '0.5s', transitionDelay: '0.5s' }}
+        >
+          <p className="font-mono text-xs sm:text-sm tracking-[0.3em] text-white/70 uppercase">
+            Full Stack Software Developer
+          </p>
+          <p className="font-mono text-[0.6rem] sm:text-[0.65rem] tracking-[0.2em] text-white/40 uppercase">
+            India · 5+ Years · Available Worldwide
+          </p>
+        </div>
 
-      {/* CTA */}
-      <div
-        className="mt-12 flex flex-col sm:flex-row items-center gap-4 transition-all duration-1000 hero-reveal"
-        style={{ animationDelay: '0.7s', transitionDelay: '0.7s' }}
-      >
-        <button onClick={scrollToNext} className="btn-hud btn-hud-primary group">
-          <Rocket size={14} />
-          Begin Mission
-        </button>
+        {/* CTA */}
+        <div
+          className="mt-12 flex flex-col sm:flex-row items-center gap-4 transition-all duration-1000 hero-reveal"
+          style={{ animationDelay: '0.7s', transitionDelay: '0.7s' }}
+        >
+          <button onClick={scrollToNext} className="btn-hud btn-hud-primary group">
+            <Rocket size={14} />
+            Begin Mission
+          </button>
+        </div>
       </div>
 
       {/* Scroll indicator */}

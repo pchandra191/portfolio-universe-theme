@@ -282,6 +282,24 @@
   animation: fade-in 0.8s ease-out 0.15s both;
 }
 
+@keyframes text-reveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0% 0 0); }
+}
+
+@keyframes text-reveal-delay {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0% 0 0); }
+}
+
+.text-reveal {
+  animation: text-reveal 1.2s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+.text-reveal-delay {
+  animation: text-reveal-delay 1.2s cubic-bezier(0.22,1,0.36,1) 0.3s both;
+}
+
 .hero-reveal {
   opacity: 0;
   transform: translateY(30px);

@@ -3,11 +3,12 @@ import { useEffect, useState, useCallback, memo } from 'react';
 const NAV_ITEMS = [
   { id: 'hero', label: 'ORIGIN', idx: '00' },
   { id: 'profile', label: 'PROFILE', idx: '01' },
-  { id: 'engine', label: 'ENGINE', idx: '02' },
-  { id: 'logs', label: 'LOGS', idx: '03' },
-  { id: 'archive', label: 'ARCHIVE', idx: '04' },
-  { id: 'experiments', label: 'EXPERIMENTS', idx: '05' },
-  { id: 'contact', label: 'TRANSMISSION', idx: '06' },
+  { id: 'engine', label: 'TECHNOLOGY', idx: '02' },
+  { id: 'logs', label: 'EXPERIENCE', idx: '03' },
+  { id: 'archive', label: 'PROJECTS', idx: '04' },
+  { id: 'experiments', label: 'LAB', idx: '05' },
+  { id: 'edupulse', label: 'EDUPULSE AI', idx: '06' },
+  { id: 'contact', label: 'CONTACT', idx: '07' },
 ];
 
 const REGIONS = [

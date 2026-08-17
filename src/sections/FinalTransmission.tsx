@@ -1,6 +1,6 @@
 import { useInView } from '@/hooks/useScroll';
 import { memo } from 'react';
-import { Mail, Github, Linkedin, FileText, Radio } from 'lucide-react';
+import { Mail, Github, Linkedin, FileText, Radio, ExternalLink } from 'lucide-react';
 
 const FinalTransmission = memo(function FinalTransmission() {
   const { ref, inView } = useInView<HTMLDivElement>(0.15);
@@ -38,17 +38,14 @@ const FinalTransmission = memo(function FinalTransmission() {
             >
               <h2 className="font-display text-3xl sm:text-5xl font-bold leading-tight mb-2">
                 <span className="bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent">
-                  MISSION COMPLETE.
+                  OPEN FOR WORK.
                 </span>
               </h2>
               <p className="font-mono text-xs sm:text-sm tracking-[0.2em] text-cyan-300/80 uppercase mb-6">
-                Ready for the next challenge.
+                Full Stack · PHP · Symfony · Laravel · React · AWS
               </p>
               <p className="text-lg sm:text-xl text-white/70 leading-relaxed mb-8 text-balance">
-                Let's build something{' '}
-                <span className="bg-gradient-to-r from-cyan-300 to-indigo-400 bg-clip-text text-transparent font-medium">
-                  extraordinary.
-                </span>
+                Available for full-time roles and contract work.
               </p>
             </div>
 
@@ -74,19 +71,38 @@ const FinalTransmission = memo(function FinalTransmission() {
           </div>
         </div>
 
+        {/* EduPulse AI highlight */}
+        <div className="glass rounded-2xl overflow-hidden mb-8" style={{ opacity: inView ? 1 : 0, transform: inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.8s cubic-bezier(0.22,1,0.36,1) 200ms' }}>
+          <div className="p-6 sm:p-8 text-left">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-2 h-2 rounded-full bg-emerald-400" style={{ animation: 'blink 2s ease-in-out infinite' }} />
+              <span className="font-mono text-[0.6rem] tracking-[0.2em] text-emerald-300/80 uppercase">
+                Current Mission
+              </span>
+            </div>
+            <h3 className="font-display text-2xl sm:text-3xl font-bold text-white/90 mb-2">
+              EduPulse AI
+            </h3>
+            <p className="text-sm text-white/55 leading-relaxed mb-4 max-w-2xl">
+              AI-powered coaching platform. Student performance analytics, AI test generation, teacher workflows, personalized learning paths, and weak-topic identification. Founder and builder.
+            </p>
+            <a href="https://syntaxbase.online/edupulseai" target="_blank" rel="noopener noreferrer" className="btn-hud text-[0.55rem] py-2 px-3">
+              <ExternalLink size={11} />
+              Explore EduPulse AI
+            </a>
+          </div>
+        </div>
+
         {/* Footer */}
         <div className="flex flex-col items-center gap-3 mt-12">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" style={{ animation: 'blink 2s ease-in-out infinite' }} />
             <span className="font-mono text-[0.55rem] tracking-[0.2em] text-white/40">
-              SIGNAL MAINTAINED DUE TO GRAVITY
+              SIGNAL MAINTAINED
             </span>
           </div>
           <p className="font-mono text-[0.5rem] tracking-[0.15em] text-white/25">
             PRABHAT CHANDRA · FULL STACK SOFTWARE DEVELOPER · 2026
-          </p>
-           <p className="font-mono text-[0.5rem] tracking-[0.15em] text-white/25">
-            FOR BEST EXPERIENCE, VIEW ON A DESKTOP MODE
           </p>
         </div>
       </div>

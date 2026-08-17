@@ -1,12 +1,12 @@
 import { useInView } from '@/hooks/useScroll';
 import { memo } from 'react';
-import { Briefcase, Code2, Target, MapPin, Layers, Cpu } from 'lucide-react';
+import { Briefcase, Code2, Target, MapPin, Layers } from 'lucide-react';
 
 const STATS = [
-  { icon: Briefcase, label: 'YEARS EXPERIENCE', value: '5+', sub: 'IN PRODUCTION' },
-  { icon: Code2, label: 'PROJECTS DELIVERED', value: '9+', sub: 'FULL STACK' },
-  { icon: Layers, label: 'TECHNOLOGIES', value: '18+', sub: 'CORE STACK' },
-  { icon: Target, label: 'CURRENT FOCUS', value: 'AI', sub: 'FULL STACK SYSTEMS' },
+  { icon: Briefcase, label: 'YEARS EXPERIENCE', value: '5+', sub: 'FULL STACK' },
+  { icon: Code2, label: 'COMPANIES', value: '6', sub: 'INDUSTRY' },
+  { icon: Layers, label: 'CORE STACK', value: 'PHP', sub: 'SYMFONY / LARAVEL / REACT' },
+  { icon: Target, label: 'CURRENT FOCUS', value: 'EDUPULSE AI', sub: 'FOUNDER & BUILDER' },
 ];
 
 const MissionProfile = memo(() => {
@@ -22,19 +22,19 @@ const MissionProfile = memo(() => {
           transition: 'all 0.8s cubic-bezier(0.22,1,0.36,1)',
         }}>
           <div>
-            <span className="section-label block mb-3">/ 01 — Event Horizon</span>
+            <span className="section-label block mb-3">/ 01 — Profile</span>
             <h2 className="font-display text-4xl sm:text-6xl font-bold leading-tight text-balance">
               <span className="bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent">
-                OPERATOR
+                PRABHAT
               </span>
               <br />
               <span className="bg-gradient-to-r from-cyan-300 to-indigo-400 bg-clip-text text-transparent">
-                DOSSIER
+                CHANDRA
               </span>
             </h2>
           </div>
           <p className="font-mono text-[0.65rem] tracking-[0.15em] text-white/40 max-w-xs leading-relaxed">
-            Classification: Full Stack Engineer. Specializing in scalable backend architecture, interactive frontends, and AI-integrated systems.
+            Full Stack Software Developer specializing in PHP, Symfony, Laravel, React, and AWS. Based in India.
           </p>
         </div>
 
@@ -82,19 +82,7 @@ const MissionProfile = memo(() => {
                 Base of Operations
               </div>
               <div className="font-display text-lg sm:text-xl text-white/90">
-                India · Earth
-              </div>
-            </div>
-          </div>
-          <div className="hidden md:block w-px h-12 bg-white/10" />
-          <div className="flex items-center gap-4 flex-1">
-            <Cpu size={20} className="text-cyan-300/70 shrink-0" />
-            <div>
-              <div className="font-mono text-[0.55rem] tracking-[0.2em] text-white/40 uppercase mb-1">
-                As Human
-              </div>
-              <div className="font-display text-lg sm:text-xl text-white/90">
-                Male(he/Him) · English/Hindi · 1996
+                Ahmedabad, India
               </div>
             </div>
           </div>
@@ -103,10 +91,22 @@ const MissionProfile = memo(() => {
             <Target size={20} className="text-cyan-300/70 shrink-0" />
             <div>
               <div className="font-mono text-[0.55rem] tracking-[0.2em] text-white/40 uppercase mb-1">
-                Mission Vector
+                Current Mission
               </div>
               <div className="font-display text-lg sm:text-xl text-white/90">
-                AI-Powered Products
+                EduPulse AI
+              </div>
+            </div>
+          </div>
+          <div className="hidden md:block w-px h-12 bg-white/10" />
+          <div className="flex items-center gap-4 flex-1">
+            <Code2 size={20} className="text-cyan-300/70 shrink-0" />
+            <div>
+              <div className="font-mono text-[0.55rem] tracking-[0.2em] text-white/40 uppercase mb-1">
+                Languages
+              </div>
+              <div className="font-display text-lg sm:text-xl text-white/90">
+                English · Hindi
               </div>
             </div>
           </div>

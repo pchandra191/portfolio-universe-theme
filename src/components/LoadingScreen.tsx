@@ -86,7 +86,7 @@ const LoadingScreen = memo(function LoadingScreen({ onComplete }: { onComplete: 
                 THE SOFTWARE COSMOS
               </h2>
               <p className="font-mono text-[0.65rem] tracking-[0.2em] text-white/50 uppercase">
-                Preparing Prabhat Chandra's software universe...
+                Prabhat Chandra · Full Stack Developer
               </p>
             </div>
           </div>

@@ -232,17 +232,17 @@ const CosmicExperiments = memo(function CosmicExperiments() {
       <div ref={ref} className="max-w-6xl mx-auto w-full relative z-10">
         {/* Header */}
         <div className="mb-16 text-center">
-          <span className="section-label block mb-3">/ 05 — Pulsar System</span>
+          <span className="section-label block mb-3">/ 05 — Lab</span>
           <h2 className="font-display text-4xl sm:text-6xl font-bold leading-tight mb-4">
             <span className="bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent">
-              COLLAGE
+              SIDE
             </span>{' '}
             <span className="bg-gradient-to-r from-cyan-300 to-indigo-400 bg-clip-text text-transparent">
               MISSIONS
             </span>
           </h2>
           <p className="font-mono text-[0.65rem] tracking-[0.15em] text-white/40 max-w-lg mx-auto leading-relaxed">
-            Experiments launched beyond the main trajectory. Exploration is the engine of discovery on Earth.
+            Explorations beyond production work. Small experiments, tools, and prototypes.
           </p>
         </div>
 

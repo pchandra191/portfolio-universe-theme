@@ -9,22 +9,26 @@ interface TechInfo {
   color: string;
   size: number;
   years: string;
-  usage: string;
+  usedIn: string[];
 }
 
 const TECHS: TechInfo[] = [
-  { name: 'Symfony', angle: 30, ring: 1, color: '#6ad0ff', size: 70, years: '4+ Years', usage: 'Enterprise Applications • Saas' },
-  { name: 'React', angle: 60, ring: 0, color: '#6ad0ff', size: 60, years: '3+ Years', usage: 'SPA • Dashboard • UI' },
-  { name: 'MySQL', angle: 90, ring: 1, color: '#7cd0ff', size: 60, years: '5+ Years', usage: 'Relational Data • Replication' },
-  { name: 'PHP', angle: 240, ring: 0, color: '#b07cff', size: 80, years: '5+ Years', usage: 'Backend • CMS • E-commerce' },
-  { name: 'REST APIs', angle: 330, ring: 1, color: '#b07cff', size: 43, years: '3+ Years', usage: 'Design • Integration • Testing' },
-  { name: 'Laravel', angle: 0, ring: 0, color: '#ff7c7c', size: 40, years: '2+ Years', usage: 'Full-Stack Apps • APIs' },
-  { name: 'HTML', angle: 50, ring: 1, color: '#ffd27a', size: 49, years: '5+ Years', usage: 'Frontend • Design • Responsiveness' },
-  { name: 'CSS', angle: 180, ring: 0, color: '#ffd27a', size: 51, years: '5+ Years', usage: 'Styling • Layout • Responsiveness' },
-  { name: 'JavaScript', angle: 120, ring: 0, color: '#ffd27a', size: 49, years: '3+ Years', usage: 'Frontend • Backend • Scripting' },
-  { name: 'AWS', angle: 300, ring: 0, color: '#ffd27a', size: 49, years: '1+ Years', usage: 'Cloud • Deployment • Scaling' },
-  { name: 'Linux', angle: 210, ring: 1, color: '#ffd27a', size: 38, years: '3+ Years', usage: 'Servers • Scripting • DevOps' },
-  { name: 'Git', angle: 270, ring: 1, color: '#ff7c7c', size: 38, years: '3+ Years', usage: 'Version Control • Collaboration' },
+  { name: 'Symfony', angle: 30, ring: 1, color: '#6ad0ff', size: 70, years: '4+ Years', usedIn: ['Retail Blitz Service', 'VSUIT CRM', 'MINUET', 'Sani Aktiv'] },
+  { name: 'React', angle: 60, ring: 0, color: '#61dafb', size: 65, years: '4+ Years', usedIn: ['Retail Blitz React', 'Sani Aktiv', 'EduPulse AI'] },
+  { name: 'Laravel', angle: 120, ring: 0, color: '#ff2d20', size: 60, years: '3+ Years', usedIn: ['Retail Blitz Service', 'EXPEDREVIEW', 'MINUET'] },
+  { name: 'PHP', angle: 200, ring: 1, color: '#777bb3', size: 80, years: '5+ Years', usedIn: ['VSUIT CRM', 'Vinmax Website', 'Think N Apply'] },
+  { name: 'JavaScript', angle: 280, ring: 0, color: '#f7df1e', size: 55, years: '5+ Years', usedIn: ['VSUIT CRM', 'EXPEDREVIEW', 'MINUET', 'EduPulse AI'] },
+  { name: 'MySQL', angle: 340, ring: 1, color: '#4479a1', size: 65, years: '5+ Years', usedIn: ['Retail Blitz Service', 'VSUIT CRM', 'EXPEDREVIEW', 'MINUET', 'Sani Aktiv'] },
+  { name: 'PostgreSQL', angle: 15, ring: 0, color: '#336791', size: 50, years: '3+ Years', usedIn: ['Retail Blitz Service', 'Sani Aktiv'] },
+  { name: 'AWS', angle: 90, ring: 0, color: '#ff9900', size: 55, years: '2+ Years', usedIn: ['Retail Blitz Service', 'MINUET', 'Sani Aktiv'] },
+  { name: 'Node.js', angle: 160, ring: 0, color: '#68a063', size: 50, years: '2+ Years', usedIn: ['VSUIT CRM'] },
+  { name: 'MongoDB', angle: 240, ring: 1, color: '#4db33d', size: 50, years: '2+ Years', usedIn: ['VSUIT CRM'] },
+  { name: 'Linux', angle: 310, ring: 1, color: '#fcc624', size: 45, years: '3+ Years', usedIn: ['Deployment', 'Scripting', 'DevOps'] },
+  { name: 'Docker', angle: 45, ring: 1, color: '#2496ed', size: 42, years: '2+ Years', usedIn: ['Retail Blitz Service'] },
+  { name: 'Git', angle: 130, ring: 0, color: '#f05032', size: 40, years: '5+ Years', usedIn: ['All Projects'] },
+  { name: 'Stripe', angle: 190, ring: 1, color: '#635bff', size: 38, years: '1+ Years', usedIn: ['MINUET'] },
+  { name: 'RabbitMQ', angle: 260, ring: 0, color: '#ff6600', size: 38, years: '1+ Years', usedIn: ['VSUIT CRM'] },
+  { name: 'Azure', angle: 320, ring: 1, color: '#0078d4', size: 38, years: '1+ Years', usedIn: ['VSUIT CRM'] },
 ];
 
 const BASE_RADII = [245, 380];
@@ -116,17 +120,17 @@ const CoreEngine = memo(function CoreEngine() {
           transform: inView ? 'translateY(0)' : 'translateY(20px)',
           transition: 'all 0.8s cubic-bezier(0.22,1,0.36,1)',
         }}>
-          <span className="section-label block mb-3">/ 02 — Virgo Cluster</span>
+          <span className="section-label block mb-3">/ 02 — Technology Orbit</span>
           <h2 className="font-display text-2xl sm:text-3xl md:text-6xl font-bold leading-tight mb-4">
             <span className="bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent">
               TECHNOLOGY
             </span>{' '}
             <span className="bg-gradient-to-r from-cyan-300 to-indigo-400 bg-clip-text text-transparent">
-              ORBIT
+              CONSTELLATION
             </span>
           </h2>
           <p className="font-mono text-[0.65rem] tracking-[0.15em] text-white/40 max-w-lg mx-auto leading-relaxed">
-            Every system orbits a central core. These are the engines that power the mission.
+            Each technology is a star. Select one to see where it appears in the career cosmos.
           </p>
         </div>
 
@@ -348,21 +352,8 @@ const CoreEngine = memo(function CoreEngine() {
                   <div className="font-mono text-sm text-white/80">{activeTech.years}</div>
                 </div>
                 <div>
-                  <div className="font-mono text-[0.55rem] tracking-[0.2em] text-white/30 mb-1">PRIMARY USAGE</div>
-                  <div className="font-mono text-sm text-white/80 leading-relaxed">{activeTech.usage}</div>
-                </div>
-                <div>
-                  <div className="font-mono text-[0.55rem] tracking-[0.2em] text-white/30 mb-1">ORBIT RING</div>
-                  <div className="flex items-center gap-2">
-                    <div
-                      className="w-3 h-3 rounded-full"
-                      style={{
-                        background: activeTech.color,
-                        boxShadow: `0 0 8px ${activeTech.color}60`,
-                      }}
-                    />
-                    <span className="font-mono text-sm text-white/80">Ring {activeTech.ring + 1}</span>
-                  </div>
+                  <div className="font-mono text-[0.55rem] tracking-[0.2em] text-white/30 mb-1">USED IN</div>
+                  <div className="font-mono text-sm text-white/80 leading-relaxed">{activeTech.usedIn.join(' · ')}</div>
                 </div>
               </div>
 
